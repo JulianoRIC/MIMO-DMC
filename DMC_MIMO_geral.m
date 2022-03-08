@@ -82,7 +82,7 @@ g35(1) = [ ];
 Nss_5 = 85;  
 g38     = step(G38)';
 g38(1) = [ ];
-Nss_6 = 76; %atencao
+Nss_6 = 76; 
 g41     = step(G41)';
 Nss_7 = 175;  
 g42     = step(G42)';
@@ -283,50 +283,27 @@ G=   [ GG11                GG12                zeros(126,12)  zeros(126,4)  zero
        ];
 
 %% Calculo da matriz K (primeira linha)
+Qu = [  lambda_g11*eye(Nu_g11)  zeros(45,26)                          zeros(45,12)                        zeros(45,4)                           zeros(45,19)                         zeros(45,2)                         zeros(45,8)                            zeros(45,19);
+            zeros(26,45)                         lambda_g12*eye(Nu_g12)  zeros(26,12)                         zeros(26,4)                           zeros(26,19)                         zeros(26,2)                         zeros(26,8)                            zeros(26,19);
+            zeros(12,45)                         zeros(12,26)                         lambda_g83*eye(Nu_g83)  zeros(12,4)                           zeros(12,19)                         zeros(12,2)                         zeros(12,8)                            zeros(12,19);
+            zeros(4,45)                           zeros(4,26)                            zeros(4,12)                           lambda_g54*eye(Nu_g54) zeros(4,19)                           zeros(4,2)                            zeros(4,8)                              zeros(4,19);
+            zeros(19,45)                         zeros(19,26)                         zeros(19,12)                         zeros(19,4)                          lambda_g35*eye(Nu_g35)  zeros(19,2)                          zeros(19,8)                            zeros(19,19);
+            zeros(2,45)                           zeros(2,26)                            zeros(2,12)                           zeros(2,4)                            zeros(2,19)                          lambda_g66*eye(Nu_g66) zeros(2,8)                               zeros(2,19)
+            zeros(8,45)                           zeros(8,26)                            zeros(8,12)                           zeros(8,4)                            zeros(8,19)                           zeros(8,2)                            lambda_g57*eye(Nu_g57)   zeros(8,19);
+            zeros(19,45)                         zeros(19,26)                          zeros(19,12)                        zeros(19,4)                          zeros(19,19)                         zeros(19,2)                          zeros(19,8)                            lambda_g38*eye(Nu_g38);
+            ];
+   
+Qy = [  lambda_g11*eye(126)  zeros(126,17)                zeros(126,53)              zeros(126,62)              zeros(126,22)              zeros(126,3)             zeros(126,40)               zeros(126,40);
+            zeros(17,126)                lambda_g12*eye(17)    zeros(17,53)                zeros(17,62)                 zeros(17,22)                zeros(17,3)               zeros(17,40)                 zeros(17,40);
+            zeros(53,126)                zeros(53,17)                  lambda_g83*eye(53)  zeros(53,62)                 zeros(53,22)                zeros(53,3)               zeros(53,40)                 zeros(53,40);
+            zeros(62,126)                zeros(62,17)                  zeros(62,53)                lambda_g54*eye(62)   zeros(62,22)                zeros(62,3)               zeros(62,40)                 zeros(62,40);
+            zeros(22,126)                zeros(22,17)                  zeros(22,53)                zeros(22,62)                 lambda_g35*eye(22)  zeros(22,3)               zeros(22,40)                 zeros(22,40);
+            zeros(3,126)                  zeros(3,17)                     zeros(3,53)                  zeros(3,62)                   zeros(3,22)                  lambda_g66*eye(3) zeros(3,40)                   zeros(3,40)
+            zeros(40,126)                zeros(40,17)                   zeros(40,53)               zeros(40,62)                 zeros(40,22)                zeros(40,3)               lambda_g57*eye(40)   zeros(40,40);
+            zeros(40,126)                zeros(40,17)                   zeros(40,53)               zeros(40,62)                 zeros(40,22)                zeros(40,3)               zeros(40,40)                 delta_g38*eye(40);
+            ];
 
-K1_g11 = calculandoK(delta_g11, GG11, lambda_g11, 126, 45) ;
-K1_g41 = calculandoK(delta_g41, GG41, lambda_g41, 62, 45) ;
-K1_g71 = calculandoK(delta_g71, GG71, lambda_g71, 40, 45) ;
-K1_g81 = calculandoK(delta_g81, GG81, lambda_g81, 40, 45) ;
-K1_g12 = calculandoK(delta_g12, GG12, lambda_g12, 126, 26) ; 
-K1_g42 = calculandoK(delta_g42, GG42, lambda_g42, 62,   26) ;
-K1_g82 = calculandoK(delta_g82, GG82, lambda_g82, 40,   26) ;
-K1_g83 = calculandoK(delta_g83, GG83, lambda_g83, 40, 12) ;
-K1_g44 = calculandoK(delta_g44, GG44, lambda_g44, 62, 4) ;
-K1_g54 = calculandoK(delta_g54, GG54, lambda_g54, 22, 4) ;
-K1_g25 = calculandoK(delta_g25, GG25, lambda_g25, 17, 19) ;
-K1_g35 = calculandoK(delta_g35, GG35, lambda_g35, 53, 19) ;
-K1_g56 = calculandoK(delta_g56, GG56, lambda_g56, 22, 2) ;
-K1_g66 = calculandoK(delta_g66, GG66, lambda_g66, 3,   2) ;
-K1_g57 = calculandoK(delta_g57, GG57, lambda_g57, 22, 8) ;
-K1_g18 = calculandoK(delta_g18, GG18, lambda_g18, 126, 19) ;
-K1_g38 = calculandoK(delta_g38, GG38, lambda_g38, 53, 19) ;
-K1_g48 = calculandoK(delta_g48, GG48, lambda_g48, 62, 19) ;
-K1_g88 = calculandoK(delta_g88, GG88, lambda_g88, 40, 19) ;
-
-% 
-% %%adequando colunas
-K1_g41 = [K1_g41 zeros(1, 126 - 62)];
-K1_g71 = [K1_g71 zeros(1, 126 - 40)];
-K1_g81 = [K1_g81 zeros(1, 126 - 40)];
-K1_g42 = [K1_g42 zeros(1, 126 - 62)];
-K1_g82 = [K1_g82 zeros(1, 126 - 40)];
-K1_g54 = [K1_g54 zeros(1, 62- 22)];
-K1_g25 = [K1_g25 zeros(1, 53- 17)];
-K1_g66 = [K1_g66 zeros(1, 22- 3)];
-K1_g38 = [K1_g38 zeros(1, 126- 53)];
-K1_g48 = [K1_g48 zeros(1, 126- 62)];
-K1_g88 = [K1_g88 zeros(1, 126- 40)];
-
-K1 = [K1_g11             K1_g12            zeros(1,40)      zeros(1,62)      zeros(1,53)     zeros(1,22)   zeros(1,22)    K1_g18;
-          zeros(1,126)     zeros(1,126)    zeros(1,40)      zeros(1,62)      K1_g25          zeros(1,22)   zeros(1,22)     zeros(1,126);
-          zeros(1,126)     zeros(1,126)    zeros(1,40)      zeros(1,62)      K1_g35          zeros(1,22)   zeros(1,22)     K1_g38;
-          K1_g41             K1_g42            zeros(1,40)      K1_g44           zeros(1,53)     zeros(1,22)   zeros(1,22)     K1_g48;
-          zeros(1,126)     zeros(1,126)    zeros(1,40)      K1_g54           zeros(1,53)     K1_g56         K1_g57           zeros(1,126);
-          zeros(1,126)     zeros(1,126)    zeros(1,40)      zeros(1,62)      zeros(1,53)    K1_g66        zeros(1,22)      zeros(1,126);
-          K1_g71             zeros(1,126)    zeros(1,40)      zeros(1,62)      zeros(1,53)    zeros(1,22)   zeros(1,22)     zeros(1,126);
-          K1_g81             K1_g82            K1_g83            zeros(1,62)      zeros(1,53)    zeros(1,22)   zeros(1,22)     K1_g88
-      ];
+K = inv(G'*Qy*G + Qu)*G';
 
 %% Calculando resposta livre
 
@@ -410,3 +387,217 @@ H=   [ H_g11              H_g12              zeros(126,65)  zeros(126,44)  zeros
 
 %iteracoes
 iters = 500;
+        
+%%%%%%%%%SIMULACAO%%%%%%%%%%%%%%%%
+%% Condicoes iniciais
+
+%coeficientes das funcoes transferencias discretas
+[A11, B11] = tfdata(G11, 'v');
+[A12, B12] = tfdata(G12, 'v');
+[A18, B18] = tfdata(G18, 'v');
+[A25, B25] = tfdata(G25, 'v');
+[A35, B35] = tfdata(G35, 'v');
+[A38, B38] = tfdata(G38, 'v');
+[A41, B41] = tfdata(G41, 'v');
+[A42, B42] = tfdata(G42, 'v');
+[A44, B44] = tfdata(G44, 'v');
+[A48, B48] = tfdata(G48, 'v');
+[A54, B54] = tfdata(G54, 'v');
+[A56, B56] = tfdata(G56, 'v');
+[A57, B57] = tfdata(G57, 'v');
+[A66, B66] = tfdata(G66, 'v');
+[A71, B71] = tfdata(G71, 'v');
+[A81, B81] = tfdata(G81, 'v');
+[A82, B82] = tfdata(G82, 'v');
+[A83, B83] = tfdata(G83, 'v');
+[A88, B88] = tfdata(G88, 'v');
+
+%preparando vetores com rowsxcols conforme [A,B]
+ac11 = size(A11,2); % nro de colunas de A
+bc11=  size(B11,2);  %nro de colunas de B
+ac12 = size(A12,2); % nro de colunas de A
+bc12=  size(B12,2);  %nro de colunas de B
+ac18 = size(A18,2); % nro de colunas de A
+bc18=  size(B18,2);  %nro de colunas de B
+ac25 = size(A25,2); % nro de colunas de A
+bc25=  size(B25,2);  %nro de colunas de B
+ac35 = size(A35,2); % nro de colunas de A
+bc35=  size(B35,2);  %nro de colunas de B
+ac38 = size(A38,2); % nro de colunas de A
+bc38=  size(B38,2);  %nro de colunas de B
+ac41 = size(A41,2); % nro de colunas de A
+bc41=  size(B41,2);  %nro de colunas de B
+ac42 = size(A42,2); % nro de colunas de A
+bc42=  size(B42,2);  %nro de colunas de B
+ac44 = size(A44,2); % nro de colunas de A
+bc44=  size(B44,2);  %nro de colunas de B
+ac48 = size(A48,2); % nro de colunas de A
+bc48=  size(B48,2);  %nro de colunas de B
+ac54 = size(A54,2); % nro de colunas de A
+bc54=  size(B54,2);  %nro de colunas de B
+ac56 = size(A56,2); % nro de colunas de A
+bc56=  size(B56,2);  %nro de colunas de B
+ac57 = size(A57,2); % nro de colunas de A
+bc57 = size(B57,2);  %nro de colunas de B
+ac66 = size(A66,2); % nro de colunas de A
+bc66 = size(B66,2);  %nro de colunas de B
+ac71 = size(A71,2); % nro de colunas de A
+bc71 = size(B71,2);  %nro de colunas de B
+ac81 = size(A81,2); % nro de colunas de A
+bc81=  size(B81,2);  %nro de colunas de B
+ac82 = size(A82,2); % nro de colunas de A
+bc82=  size(B82,2);  %nro de colunas de B
+ac83 = size(A83,2); % nro de colunas de A
+bc83=  size(B83,2);  %nro de colunas de B
+ac88 = size(A88,2); % nro de colunas de A
+bc88=  size(B88,2);  %nro de colunas de B
+
+%preparando vetores para valores anteriores de y e u
+y_ant11 = zeros(1,ac11); 
+u_ant11=zeros(1,bc11);
+y_ant12 = zeros(1,ac12); 
+u_ant12=zeros(1,bc12);
+y_ant18 = zeros(1,ac18); 
+u_ant18=zeros(1,bc18);
+y_ant25 = zeros(1,ac25); 
+u_ant25=zeros(1,bc25);
+y_ant35 = zeros(1,ac35); 
+u_ant35=zeros(1,bc35);
+y_ant38 = zeros(1,ac38); 
+u_ant38=zeros(1,bc38);
+y_ant41 = zeros(1,ac41); 
+u_ant41=zeros(1,bc41);
+y_ant42 = zeros(1,ac42); 
+u_ant42=zeros(1,bc42);
+y_ant44 = zeros(1,ac44); 
+u_ant44=zeros(1,bc44);
+y_ant48 = zeros(1,ac48); 
+u_ant48=zeros(1,bc48);
+y_ant54 = zeros(1,ac54); 
+u_ant54=zeros(1,bc54);
+y_ant56 = zeros(1,ac56); 
+u_ant56=zeros(1,bc56);
+y_ant57 = zeros(1,ac57); 
+u_ant57=zeros(1,bc57);
+y_ant66 = zeros(1,ac66); 
+u_ant66=zeros(1,bc66);
+y_ant71 = zeros(1,ac71); 
+u_ant71=zeros(1,bc71);
+y_ant81 = zeros(1,ac81); 
+u_ant81=zeros(1,bc81);
+y_ant82 = zeros(1,ac82); 
+u_ant82=zeros(1,bc82);
+y_ant83 = zeros(1,ac83); 
+u_ant83=zeros(1,bc83);
+y_ant88 = zeros(1,ac88); 
+u_ant88=zeros(1,bc88);
+
+%vetores u passados da resposta livre
+u_pass1 = zeros(1, 307);
+u_pass2 = zeros(1, 197);
+u_pass3 = zeros(1, 65);
+u_pass4 = zeros(1, 44);
+u_pass5 = zeros(1, 85);
+u_pass6 = zeros(1, 20);
+u_pass7 = zeros(1, 47);
+u_pass8 = zeros(1, 125);
+u_passados = [u_pass1 u_pass2 u_pass3 u_pass4 u_pass5 u_pass6 u_pass7 u_pass8];
+
+%vetores dos sinais de controle
+u1=zeros(1,iters);
+u2=zeros(1,iters);
+u3=zeros(1,iters);
+u4=zeros(1,iters);
+u5=zeros(1,iters);
+u6=zeros(1,iters);
+u7=zeros(1,iters);
+u8=zeros(1,iters);
+
+%inicializando variaveis de incremento de controle
+deltaU1=0; deltaU2=0; deltaU3=0; deltaU4=0; deltaU5=0; deltaU6=0; deltaU7=0; deltaU8=0;
+ 
+%vetores para guardar saidas 
+ y1 = zeros(1,iters); %saida
+ y2 = zeros(1,iters); %saida
+ y3 = zeros(1,iters); %saida
+ y4 = zeros(1,iters); %saida
+ y5 = zeros(1,iters); %saida
+ y6 = zeros(1,iters); %saida
+ y7 = zeros(1,iters); %saida
+ y8 = zeros(1,iters); %saida
+
+ %referencia
+ w = [zeros(1,2)  2*ones(1,200)  6*ones(1, iters) ]; 
+
+%% DMC Loop
+
+for i=1:iters  
+    
+ y1(i) =  A11*y_ant11'+B11*u_ant11' +A12*y_ant12'+B12*u_ant12' + A11*y_ant18'+B18*u_ant18';          
+ y2(i) = A25*y_ant25'+B25*u_ant25';           
+ y3(i) = A35*y_ant35'+B35*u_ant35' +A38*y_ant38'+B38*u_ant38';      
+ y4(i) = A41*y_ant41'+B41*u_ant41'+A42*y_ant42'+B42*u_ant42' +A44*y_ant44'+B44*u_ant44' +A48*y_ant48'+B48*u_ant48';
+ y5(i) = A54*y_ant54'+B54*u_ant54' +A56*y_ant56'+B56*u_ant56' +A57*y_ant57'+B57*u_ant57' ;
+ y6(i) = A66*y_ant66'+B66*u_ant66' ;
+ y7(i) = A71*y_ant71'+B71*u_ant71'; 
+ y8(i) = A81*y_ant81'+B81*u_ant81' +A82*y_ant82'+B82*u_ant82'+A83*y_ant83'+B83*u_ant83'+A88*y_ant88'+B88*u_ant88';
+   
+%resposta livre
+free1 =zeros(1,N(1));
+free2 =zeros(1,N(2));
+free3 =zeros(1,N(3));
+free4 =zeros(1,N(4));
+free5 =zeros(1,N(5));
+free6 =zeros(1,N(6));
+free7 =zeros(1,N(7));
+free8 =zeros(1,N(8));
+
+ for k = 1:N(1)
+free1(k) = y1(i) +  H(1,:)*u_passados';
+ end     
+ 
+ for k = 1:N(2)
+ free2(k) = y2(i) +  H(2,:)*u_passados';
+ end
+ 
+ for k = 1:N(3)
+ free3(k) = y3(i) +  H(3,:)*u_passados';
+ end
+ 
+ for k = 1:N(4)
+ free4(k) = y4(i) +  H(4,:)*u_passados';
+ end
+ 
+ for k = 1:N(5)
+ free5(k) = y5(i) +  H(5,:)*u_passados';
+ end
+ 
+ for k = 1:N(6)
+ free6(k) = y6(i) +  H(6,:)*u_passados';
+ end
+ 
+ for k = 1:N(7)
+ free7(k) = y7(i) +  H(7,:)*u_passados';
+ end
+ 
+ for k = 1:N(8)
+ free8(k) = y8(i) +  H(8,:)*u_passados';
+ end
+ 
+free = [ free1 free2 free3 free4 free5 free6 free7 free8]';
+
+%considera ref futura cte
+ref1 =w(i)*ones(1,N(1))';
+ref2 =w(i)*ones(1,N(2))';
+ref3 =w(i)*ones(1,N(3))';
+ref4 =w(i)*ones(1,N(4))';
+ref5 =w(i)*ones(1,N(5))';
+ref6 =w(i)*ones(1,N(6))';
+ref7 =w(i)*ones(1,N(7))';
+ref8 =w(i)*ones(1,N(8))';
+
+ref = [ref1 ; ref2 ;  ref3 ; ref4 ; ref5 ; ref6; ref7; ref8];
+
+%calcula o controle 
+deltaU = K*(ref-free);
+end

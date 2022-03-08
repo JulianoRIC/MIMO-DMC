@@ -129,31 +129,31 @@ Nss = [Nss_1 Nss_2 Nss_3  Nss_4 Nss_5 Nss_6 Nss_7 ...
 %ajuste(funcao transferencia, atraso, lambda, delta, periodo de amostragem)
 
 %G11
-[N1_g11, N2_g11, N_g11, Nu_g11, lambda_g11, delta_g11, t5_g11] = ajuste(G11, G11.InputDelay, 300, 1, TS);
+[N1_g11, N2_g11, N_g11, Nu_g11, lambda_g11, delta_g11, t5_g11] = ajuste(G11, G11.InputDelay, 1, 1, TS);
 
 %G12
-[N1_g12, N2_g12, N_g12, Nu_g12, lambda_g12, delta_g12, t5_g12] = ajuste(G12, G12.InputDelay, 300, 1, TS);
+[N1_g12, N2_g12, N_g12, Nu_g12, lambda_g12, delta_g12, t5_g12] = ajuste(G12, G12.InputDelay, 1, 1, TS);
 
 %G18
-[N1_g18, N2_g18, N_g18, Nu_g18, lambda_g18, delta_g18, t5_g18] = ajuste(G18, G18.InputDelay, 300, 1, TS);
+[N1_g18, N2_g18, N_g18, Nu_g18, lambda_g18, delta_g18, t5_g18] = ajuste(G18, G18.InputDelay, 1, 1, TS);
 
 %G25
-[N1_g25, N2_g25, N_g25, Nu_g25, lambda_g25, delta_g25, t5_g25] = ajuste(G25, G25.InputDelay, 300, 1, TS);
+[N1_g25, N2_g25, N_g25, Nu_g25, lambda_g25, delta_g25, t5_g25] = ajuste(G25, G25.InputDelay, 1, 1, TS);
 
 %G35
-[N1_g35, N2_g35, N_g35, Nu_g35, lambda_g35, delta_g35, t5_g35] = ajuste(G35, G35.InputDelay, 300, 1, TS);
+[N1_g35, N2_g35, N_g35, Nu_g35, lambda_g35, delta_g35, t5_g35] = ajuste(G35, G35.InputDelay, 1, 1, TS);
 
 %G38
-[N1_g38, N2_g38, N_g38, Nu_g38, lambda_g38, delta_g38, t5_g38] = ajuste(G38, G38.InputDelay, 300, 1, TS);
+[N1_g38, N2_g38, N_g38, Nu_g38, lambda_g38, delta_g38, t5_g38] = ajuste(G38, G38.InputDelay, 1, 1, TS);
 
 %G41
-[N1_g41, N2_g41, N_g41, Nu_g41, lambda_g41, delta_g41, t5_g41] = ajuste(G41, G41.InputDelay, 300, 1, TS);
+[N1_g41, N2_g41, N_g41, Nu_g41, lambda_g41, delta_g41, t5_g41] = ajuste(G41, G41.InputDelay, 1, 1, TS);
 
 %G42
-[N1_g42, N2_g42, N_g42, Nu_g42, lambda_g42, delta_g42, t5_g42] = ajuste(G42, G42.InputDelay, 300, 1, TS);
+[N1_g42, N2_g42, N_g42, Nu_g42, lambda_g42, delta_g42, t5_g42] = ajuste(G42, G42.InputDelay, 1, 1, TS);
 
 %G44
-[N1_g44, N2_g44, N_g44, Nu_g44, lambda_g44, delta_g44, t5_g44] = ajuste(G44, G44.InputDelay, 300, 1, TS);
+[N1_g44, N2_g44, N_g44, Nu_g44, lambda_g44, delta_g44, t5_g44] = ajuste(G44, G44.InputDelay, 1, 1, TS);
 
 %G48
 [N1_g48, N2_g48, N_g48, Nu_g48, lambda_g48, delta_g48, t5_g48] = ajuste(G48, G48.InputDelay, 1, 1, TS);
@@ -670,55 +670,55 @@ utemp11 = u_ant11(1:bc11-1);
 u_ant11 = [u1(i)  utemp11];
 
 utemp12 = u_ant12(1:bc12-1);
-u_ant12 = [u2(i)  utemp12];
+u_ant12 = [u1(i)  utemp12];
 
 utemp18 = u_ant18(1:bc18-1);
-u_ant18 = [u8(i)  utemp18];
+u_ant18 = [u1(i)  utemp18];
 
 utemp25 = u_ant25(1:bc25-1);
 u_ant25 = [u5(i)  utemp25];
 
 utemp35 = u_ant35(1:bc35-1);
-u_ant35 = [u5(i)  utemp35];
+u_ant35 = [u3(i)  utemp35];
 
 utemp38 = u_ant38(1:bc38-1);
-u_ant38 = [u8(i)  utemp38];
+u_ant38 = [u3(i)  utemp38];
 
 utemp41 = u_ant41(1:bc41-1);
-u_ant41 = [u1(i)  utemp41];
+u_ant41 = [u4(i)  utemp41];
 
 utemp42 = u_ant42(1:bc42-1);
-u_ant42 = [u2(i)  utemp42];
+u_ant42 = [u4(i)  utemp42];
 
 utemp44 = u_ant44(1:bc44-1);
 u_ant44 = [u4(i)  utemp44];
 
 utemp48 = u_ant48(1:bc48-1);
-u_ant48 = [u8(i)  utemp48];
+u_ant48 = [u4(i)  utemp48];
 
 utemp54 = u_ant54(1:bc54-1);
-u_ant54 = [u4(i)  utemp54];
+u_ant54 = [u5(i)  utemp54];
  
 utemp56 = u_ant56(1:bc56-1);
-u_ant56 = [u6(i)  utemp56];
+u_ant56 = [u5(i)  utemp56];
 
 utemp57 = u_ant57(1:bc57-1);
-u_ant57 = [u7(i)  utemp57];
+u_ant57 = [u5(i)  utemp57];
 
 utemp66 = u_ant66(1:bc66-1);
 u_ant66 = [u6(i)  utemp66];
 
 utemp71 = u_ant71(1:bc71-1);
-u_ant71 = [u1(i)  utemp71];
+u_ant71 = [u7(i)  utemp71];
 
 utemp81 = u_ant81(1:bc81-1);
-u_ant81 = [u1(i)  utemp81];
+u_ant81 = [u8(i)  utemp81];
 
 utemp82 = u_ant82(1:bc82-1);
-u_ant82 = [u2(i)  utemp82];
+u_ant82 = [u8(i)  utemp82];
 
 utemp83 = u_ant83(1:bc83-1);
-u_ant83 = [u3(i)  utemp83];
+u_ant83 = [u8(i)  utemp83];
 
 utemp88 = u_ant88(1:bc88-1);
 u_ant88 = [u8(i)  utemp88];
