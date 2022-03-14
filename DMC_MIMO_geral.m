@@ -29,18 +29,6 @@ G82 =  tf([0 -0.004995], [1 -0.9445], TS);
 G83 =  tf([-0.006484 0.004228], [1 -1.432 0.4647], TS);
 G88 =  tf([-0.0002795 0.0003478 0.0003198], [1 -1.652 0.6869], TS, 'InputDelay', 2);
 
-%Matriz de funcoes transferencia em relacao as MV
-Gu =  [
-          G11 G12 0 0 0 0    0    G18; 
-          0  0    0   0    G25   0   0   0;
-          0  0  0  0    G35   0  0   G38;
-          G41 G42 0 G44  0 0 0 G48;
-          0 0 0 G54 0    G56  G57   0;
-          0    0   0   0   0    G66   0   0;
-          G71    0   0   0  0    0    0   0;
-          G81 G82 G83 0  0 0  0  G88
-          ];
-
 %funcoes de transferencia em relacao a perturbacao
 G1_2 =  tf([0.01366 -0.0128 -0.01706], [1 -1.915 0.9191], TS, 'InputDelay', 20);
 G21   =  tf([0.00236 0.002173], [1 -0.9518 0.1157], TS);
@@ -52,18 +40,6 @@ G7_1 =  tf([0.0004086 -0.0003754], [1 -1.306 0.3331], TS);
 G72   =  tf([0.07873 -0.07549], [1 -1.176 0.2297], TS);
 G8_1 =  tf([3.153e-5 -2.93810e-5], [1 -1.9  0.903], TS);
 G8_2 =  tf([0 0.008119], [1 -0.956], TS);
-
-% matriz perturbacao
-Gw = [
-           0      G1_2  0;
-           G21 G22    0;
-           0       0        0;
-           0      G4_2  0;
-           0      0     G53;
-           0      0     G63;
-           G7_1 G72   0;
-           G8_1 G8_2 0
-           ];
                 
 %% Vector de coeficientes Gi
 %Nss: horizonte do modelo
@@ -129,31 +105,31 @@ Nss = [Nss_1 Nss_2 Nss_3  Nss_4 Nss_5 Nss_6 Nss_7 ...
 %ajuste(funcao transferencia, atraso, lambda, delta, periodo de amostragem)
 
 %G11
-[N1_g11, N2_g11, N_g11, Nu_g11, lambda_g11, delta_g11, t5_g11] = ajuste(G11, G11.InputDelay, 1, 1, TS);
+[N1_g11, N2_g11, N_g11, Nu_g11, lambda_g11, delta_g11, t5_g11] = ajuste(G11, G11.InputDelay, 300, 1, TS);
 
 %G12
-[N1_g12, N2_g12, N_g12, Nu_g12, lambda_g12, delta_g12, t5_g12] = ajuste(G12, G12.InputDelay, 1, 1, TS);
+[N1_g12, N2_g12, N_g12, Nu_g12, lambda_g12, delta_g12, t5_g12] = ajuste(G12, G12.InputDelay, 300, 1, TS);
 
 %G18
-[N1_g18, N2_g18, N_g18, Nu_g18, lambda_g18, delta_g18, t5_g18] = ajuste(G18, G18.InputDelay, 1, 1, TS);
+[N1_g18, N2_g18, N_g18, Nu_g18, lambda_g18, delta_g18, t5_g18] = ajuste(G18, G18.InputDelay, 300, 1, TS);
 
 %G25
-[N1_g25, N2_g25, N_g25, Nu_g25, lambda_g25, delta_g25, t5_g25] = ajuste(G25, G25.InputDelay, 1, 1, TS);
+[N1_g25, N2_g25, N_g25, Nu_g25, lambda_g25, delta_g25, t5_g25] = ajuste(G25, G25.InputDelay, 300, 1, TS);
 
 %G35
-[N1_g35, N2_g35, N_g35, Nu_g35, lambda_g35, delta_g35, t5_g35] = ajuste(G35, G35.InputDelay, 1, 1, TS);
+[N1_g35, N2_g35, N_g35, Nu_g35, lambda_g35, delta_g35, t5_g35] = ajuste(G35, G35.InputDelay, 300, 1, TS);
 
 %G38
-[N1_g38, N2_g38, N_g38, Nu_g38, lambda_g38, delta_g38, t5_g38] = ajuste(G38, G38.InputDelay, 1, 1, TS);
+[N1_g38, N2_g38, N_g38, Nu_g38, lambda_g38, delta_g38, t5_g38] = ajuste(G38, G38.InputDelay, 300, 1, TS);
 
 %G41
-[N1_g41, N2_g41, N_g41, Nu_g41, lambda_g41, delta_g41, t5_g41] = ajuste(G41, G41.InputDelay, 1, 1, TS);
+[N1_g41, N2_g41, N_g41, Nu_g41, lambda_g41, delta_g41, t5_g41] = ajuste(G41, G41.InputDelay, 300, 1, TS);
 
 %G42
-[N1_g42, N2_g42, N_g42, Nu_g42, lambda_g42, delta_g42, t5_g42] = ajuste(G42, G42.InputDelay, 1, 1, TS);
+[N1_g42, N2_g42, N_g42, Nu_g42, lambda_g42, delta_g42, t5_g42] = ajuste(G42, G42.InputDelay, 300, 1, TS);
 
 %G44
-[N1_g44, N2_g44, N_g44, Nu_g44, lambda_g44, delta_g44, t5_g44] = ajuste(G44, G44.InputDelay, 1, 1, TS);
+[N1_g44, N2_g44, N_g44, Nu_g44, lambda_g44, delta_g44, t5_g44] = ajuste(G44, G44.InputDelay, 300, 1, TS);
 
 %G48
 [N1_g48, N2_g48, N_g48, Nu_g48, lambda_g48, delta_g48, t5_g48] = ajuste(G48, G48.InputDelay, 1, 1, TS);
@@ -184,7 +160,6 @@ Nss = [Nss_1 Nss_2 Nss_3  Nss_4 Nss_5 Nss_6 Nss_7 ...
 
 %G88
 [N1_g88, N2_g88, N_g88, Nu_g88, lambda_g88, delta_g88, t5_g88] = ajuste(G88, G88.InputDelay, 1, 1, TS);
-
 
 NU = [Nu_g11 Nu_g12 0 0 0 0 0 Nu_g18;
           0 0 0 0 Nu_g25 0 0 0 ;
@@ -247,17 +222,6 @@ GG54 = reshapeMatrix(GLen, GG54, 5);
 GG56 = reshapeMatrix(GLen, GG56, 5); 
 GG83 = reshapeMatrix(GLen, GG83, 8);
 GG88 = reshapeMatrix(GLen, GG88, 8);
-
-GLenDepois =  [
-          [size(GG11,1) size(GG12,1) 0 0 0 0    0    size(GG18,1)]; 
-          [0  0    0   0    size(GG25,1)   0   0   0];
-          [0  0  0  0    size(GG35,1)   0  0   size(GG38,1)];
-          [size(GG41,1) size(GG42,1) 0 size(GG44,1)  0 0 0 size(GG48,1)];
-          [0 0 0 size(GG54,1) 0    size(GG56,1)  size(GG57,1)   0];
-          [0    0   0   0   0    size(GG66,1)   0   0];
-          [size(GG71,1)   0   0   0  0    0    0   0];
-          [size(GG81,1) size(GG82,1) size(GG83,1) 0  0 0  0  size(GG88,1)]
-          ];
 
 GG41 = reshapeCol(NU, GG41, 1);
 GG71 = reshapeCol(NU, GG71, 1); 
@@ -355,25 +319,6 @@ H_g66 = [H_g66 zeros(size(H_g66,1),  max(sizeH(:,6)) - size(H_g66,2))];
 H_g18 = [H_g18 zeros(size(H_g18,1),  max(sizeH(:,8)) - size(H_g18,2))];
 H_g38 = [H_g38 zeros(size(H_g38,1),  max(sizeH(:,8)) - size(H_g38,2))];
 H_g88 = [H_g88 zeros(size(H_g88,1),  max(sizeH(:,8)) - size(H_g88,2))];
-
-sizeLHD = [size(H_g11,1) size(H_g12,1) 0 0 0 0 0 size(H_g18,1);
-               0 0 0 0 size(H_g25,1) 0 0 0;
-               0 0 0 0 size(H_g35,1) 0 0 size(H_g38,1);
-               size(H_g41,1) size(H_g42,1) 0 size(H_g44,1) 0 0 0 size(H_g48,1);
-               0 0 0 size(H_g54,1) 0 size(H_g56,1) size(H_g57,1) 0;
-               0 0 0 0 0 size(H_g66,1) 0 0;
-               size(H_g71,1) 0 0 0 0 0 0 0;
-               size(H_g81,1) size(H_g82,1) size(H_g83,1) 0 0 0 0 size(H_g88,1)];
-           
-sizeCHD = [size(H_g11,2) size(H_g12,2) 0 0 0 0 0 size(H_g18,2);
-               0 0 0 0 size(H_g25,2) 0 0 0;
-               0 0 0 0 size(H_g35,2) 0 0 size(H_g38,2);
-               size(H_g41,2) size(H_g42,2) 0 size(H_g44,2) 0 0 0 size(H_g48,2);
-               0 0 0 size(H_g54,2) 0 size(H_g56,2) size(H_g57,2) 0;
-               0 0 0 0 0 size(H_g66,2) 0 0;
-               size(H_g71,2) 0 0 0 0 0 0 0;
-               size(H_g81,2) size(H_g82,2) size(H_g83,2) 0 0 0 0 size(H_g88,2)];
-           
            
 H=   [ H_g11              H_g12              zeros(126,65)  zeros(126,44)  zeros(126,85)  zeros(126,20)  zeros(126,47) H_g18; 
         zeros(17,307)   zeros(17,197)  zeros(17,65)    zeros(17,44)    H_g25               zeros(17,20)    zeros(17,47)   zeros(17,125);
@@ -514,8 +459,8 @@ u7=zeros(1,iters);
 u8=zeros(1,iters);
 
 %inicializando variaveis de incremento de controle
-deltaU1=0; deltaU2=0; deltaU3=0; deltaU4=0; deltaU5=0; deltaU6=0; deltaU7=0; deltaU8=0;
- 
+deltaU = zeros(1,135);
+
 %vetores para guardar saidas 
  y1 = zeros(1,iters); %saida
  y2 = zeros(1,iters); %saida
@@ -527,13 +472,13 @@ deltaU1=0; deltaU2=0; deltaU3=0; deltaU4=0; deltaU5=0; deltaU6=0; deltaU7=0; del
  y8 = zeros(1,iters); %saida
 
  %referencia
- w = [zeros(1,2)  2*ones(1,200)  6*ones(1, iters) ]; 
+ w = [zeros(1,2)  0.5*ones(1,200)  1*ones(1, iters) ]; 
 
 %% DMC Loop
 
 for i=1:iters  
     
- y1(i) =  A11*y_ant11'+B11*u_ant11' +A12*y_ant12'+B12*u_ant12' + A11*y_ant18'+B18*u_ant18';          
+ y1(i) =  A11*y_ant11'+B11*u_ant11' +A12*y_ant12'+B12*u_ant12' + A18*y_ant18'+B18*u_ant18';          
  y2(i) = A25*y_ant25'+B25*u_ant25';           
  y3(i) = A35*y_ant35'+B35*u_ant35' +A38*y_ant38'+B38*u_ant38';      
  y4(i) = A41*y_ant41'+B41*u_ant41'+A42*y_ant42'+B42*u_ant42' +A44*y_ant44'+B44*u_ant44' +A48*y_ant48'+B48*u_ant48';
@@ -600,4 +545,92 @@ ref = [ref1 ; ref2 ;  ref3 ; ref4 ; ref5 ; ref6; ref7; ref8];
 
 %calcula o controle 
 deltaU = K*(ref-free);
+
+ if i == 1
+        u1(i)=deltaU(1);
+        u2(i)=deltaU(45);
+        u3(i)=deltaU(71);
+        u4(i)=deltaU(83);
+        u5(i)=deltaU(87);
+        u6(i)=deltaU(106);
+        u7(i)=deltaU(108);
+        u8(i)=deltaU(116);       
+     else
+         u1(i) = u1(i-1) + deltaU(1);
+         u2(i) = u2(i-1) + deltaU(45);
+         u3(i) = u3(i-1) + deltaU(71);
+         u4(i) = u4(i-1) + deltaU(83);
+         u5(i) = u5(i-1) + deltaU(87);
+         u6(i) = u6(i-1) + deltaU(106);
+         u7(i) = u7(i-1) + deltaU(108);
+         u8(i) = u8(i-1) + deltaU(116);
+ end
+    
+%atualizacao do vetor de controle
+utemp11 = u_ant11(1:bc11-1);
+u_ant11 = [u1(i)  utemp11];
+
+utemp12 = u_ant12(1:bc12-1);
+u_ant12 = [u2(i)  utemp12];
+
+utemp18 = u_ant18(1:bc18-1);
+u_ant18 = [u8(i)  utemp18];
+
+utemp25 = u_ant25(1:bc25-1);
+u_ant25 = [u5(i)  utemp25];
+
+utemp35 = u_ant35(1:bc35-1);
+u_ant35 = [u5(i)  utemp35];
+
+utemp38 = u_ant38(1:bc38-1);
+u_ant38 = [u8(i)  utemp38];
+
+utemp41 = u_ant41(1:bc41-1);
+u_ant41 = [u1(i)  utemp41];
+
+utemp42 = u_ant42(1:bc42-1);
+u_ant42 = [u2(i)  utemp42];
+
+utemp44 = u_ant44(1:bc44-1);
+u_ant44 = [u4(i)  utemp44];
+
+utemp48 = u_ant48(1:bc48-1);
+u_ant48 = [u8(i)  utemp48];
+
+utemp54 = u_ant54(1:bc54-1);
+u_ant54 = [u4(i)  utemp54];
+ 
+utemp56 = u_ant56(1:bc56-1);
+u_ant56 = [u6(i)  utemp56];
+
+utemp57 = u_ant57(1:bc57-1);
+u_ant57 = [u7(i)  utemp57];
+
+utemp66 = u_ant66(1:bc66-1);
+u_ant66 = [u6(i)  utemp66];
+
+utemp71 = u_ant71(1:bc71-1);
+u_ant71 = [u1(i)  utemp71];
+
+utemp81 = u_ant81(1:bc81-1);
+u_ant81 = [u1(i)  utemp81];
+
+utemp82 = u_ant82(1:bc82-1);
+u_ant82 = [u2(i)  utemp82];
+
+utemp83 = u_ant83(1:bc83-1);
+u_ant83 = [u3(i)  utemp83];
+
+utemp88 = u_ant88(1:bc88-1);
+u_ant88 = [u8(i)  utemp88];
+     
+   
 end
+
+
+%%  Graficos
+subplot(3,1,1)
+plot(y1(1:iters), '--b');
+hold
+plot(w(1:iters), 'm');
+legend('saida 1','ref 1')

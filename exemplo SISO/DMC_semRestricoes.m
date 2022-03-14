@@ -112,9 +112,9 @@ deltaU=0;
  
 %%  Graficos
 subplot(3,1,1)
-plot(d(1:iters), '--b');
+plot(d(1:iters), 'b');
 hold 
-plot(w(1:iters), 'm');
+plot(w(1:iters), '--m');
 legend('saida', 'ref')
 
 subplot(3,1,2)
