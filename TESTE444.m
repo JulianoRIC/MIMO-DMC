@@ -285,7 +285,7 @@ G=   [ GG11                GG12                zeros(126,12)  zeros(126,4)  zero
 %% Calculo da matriz K (primeira linha)
 
 lambda1 = 10; lambda2 = 10; lambda3 = 10; lambda4 = 10; lambda5 = 10; lambda6 = 10; lambda7 = 10; lambda8 = 10;
-delta1 = 10;     delta2 = 10;     delta3 = 10;     delta4 = 10;     delta5 = 10;      delta6=10;       delta7=10;       delta8=10;
+delta1     = 10; delta2 = 10;     delta3 = 10;     delta4 = 10;     delta5 = 10;      delta6=10;       delta7=10;       delta8=10;
 
 
 Qu = [  lambda1*eye(Nu_g11)        zeros(45,26)                          zeros(45,12)                        zeros(45,4)                           zeros(45,19)                         zeros(45,2)                         zeros(45,8)                            zeros(45,19);
@@ -421,17 +421,17 @@ ysim = zeros(8,iters);
 %vetor do tempo
 t = 1:iters;
 
-%referencias
-r1 =  [zeros(1,100)  8*ones(1,4900)];
-r2 =  [zeros(1,200) 7.5*ones(1,4800)];
-r3 =  [zeros(1,300) 7*ones(1, 4700)];
-r4 =  [zeros(1,400) 6.5*ones(1,4600)];
-r5 =  [zeros(1,500) 6*ones(1,4500)];
-r6 =  [zeros(1,600) 5.5*ones(1,4400)];
-r7 =  [zeros(1,700) 5*ones(1,4300)];
-r8 =  [zeros(1,800) 4.5*ones(1,4200)];
+%vetores das referencias
+w1 =  [zeros(1,100)  8*ones(1,4900)];
+w2 =  [zeros(1,200) 7.5*ones(1,4800)];
+w3 =  [zeros(1,300) 7*ones(1, 4700)];
+w4 =  [zeros(1,400) 6.5*ones(1,4600)];
+w5 =  [zeros(1,500) 6*ones(1,4500)];
+w6 =  [zeros(1,600) 5.5*ones(1,4400)];
+w7 =  [zeros(1,700) 5*ones(1,4300)];
+w8 =  [zeros(1,800) 4.5*ones(1,4200)];
 
-r = [r1;r2;r3;r4;r5;r6;r7;r8];
+w = [w1;w2;w3;w4;w5;w6;w7;w8];
  
 %% DMC Loop
 
@@ -462,11 +462,21 @@ y = G*deltaU + H*du_passados + I*ysim(:,k);
                             du_passados(Nss(1)+Nss(2)+Nss(3)+Nss(4)+Nss(5)+Nss(6)+Nss(7)+1:Nss(1)+Nss(2)+Nss(3)+Nss(4)+Nss(5)+Nss(6)+Nss(7)+Nss(8)-1,1);
                             ];
  
- %set point                       
- sp = [8*ones(1,N(1)) 7.5*ones(1,N(2)) 7*ones(1,N(3)) 6.5*ones(1,N(4)) 6*ones(1,N(5)) 5.5*ones(1,N(6)) 5*ones(1,N(7)) 4.5*ones(1,N(8))]'; 
+%set point  
+%considera ref futura cte
+ref1 =w1(k)*ones(1,N(1))';
+ref2 =w2(k)*ones(1,N(2))';
+ref3 =w3(k)*ones(1,N(3))';
+ref4 =w4(k)*ones(1,N(4))';
+ref5 =w5(k)*ones(1,N(5))';
+ref6 =w6(k)*ones(1,N(6))';
+ref7 =w7(k)*ones(1,N(7))';
+ref8 =w8(k)*ones(1,N(8))';
+
+ref = [ref1 ; ref2 ;  ref3 ; ref4 ; ref5 ; ref6; ref7; ref8];
         
 %calcula o controle 
-deltaU = K*(sp-y);
+deltaU = K*(ref-y);
 
 %atualiza controle
 u(1,k) = u(1, k-1) + deltaU(1,1);
@@ -484,59 +494,101 @@ end
 %%  Graficos
 
 %saidas e referencias
-subplot(3,1,1)
+
+figure(1)
+
+%saida 1, ref 1
+subplot(8,1,1)
 plot(t,out(:,1), 'r')
 hold on
+plot(t,w(1,:), 'r')
+legend('saida1','ref1')
+
+%saida 2, ref 2
+subplot(8,1,2)
 plot(t,out(:,2), 'g')
 hold on
+plot(t,w(2,:), 'g')
+legend('saida2','ref2')
+
+%saida 3, ref 3
+subplot(8,1,3)
 plot(t,out(:,3), 'b')
 hold on
+plot(t,w(3,:), 'b')
+legend('saida3','ref3')
+
+%saida 4, ref 4
+subplot(8,1,4)
 plot(t,out(:,4), 'k')
 hold on
+plot(t,w(4,:),'k')
+legend('saida4','ref4')
+
+%saida 5, referencia 5
+subplot(8,1,5)
 plot(t,out(:,5), 'm')
 hold on
+plot(t,w(5,:),'m')
+legend('saida5','ref5')
+
+%saida 6 referencia 6
+subplot(8,1,6)
 plot(t,out(:,6), 'y')
 hold on
+plot(t,w(6,:),'y')
+legend('saida6','ref6')
+
+%saida 7, referencia 7
+subplot(8,1,7)
 plot(t,out(:,7), 'c')
 hold on
+plot(t,w(7,:),'c')
+legend('saida7','ref7')
+
+%saida 8, referencia 8
+subplot(8,1,8)
 plot(t,out(:,8), 'k')
 hold on
-plot(t,r(1,:), 'r')
-hold on
-plot(t,r(2,:), 'g')
-hold on
-plot(t,r(3,:), 'b')
-hold on
-plot(t,r(4,:),'k')
-hold on
-plot(t,r(5,:),'m')
-hold on
-plot(t,r(6,:),'y')
-hold on
-plot(t,r(7,:),'c')
-hold on
-plot(t,r(8,:),'k')
-legend('saida 1','saida2', 'saida3', 'saida4', 'saida5','saida6', 'saida7', 'saida8', ... 
-             'ref 1', 'ref 2', 'ref 3','ref 4','ref 5','ref 6','ref 7','ref 8')
+plot(t,w(8,:),'k')
+legend('saida8','ref8')
 
 %sinal de controle
-subplot(3,1,2);
+figure(2)
+
+%u1
+subplot(8,1,1);
 plot(t,u(1,:),'r')
-hold on
+legend('u1')
+%u2
+subplot(8,1,2);
 plot(t,u(2,:),'g')
-hold on
+legend('u2')
+%u3
+subplot(8,1,3);
 plot(t,u(3,:),'b')
-hold on
+legend('u3')
+%u4
+subplot(8,1,4);
 plot(t,u(4,:),'k')
-hold on
+legend('u4')
+%u5
+subplot(8,1,5);
 plot(t,u(5,:),'m')
-hold on
+legend('u5')
+%u6
+subplot(8,1,6);
 plot(t,u(6,:),'y')
-hold on
+legend('u6')
+%u7
+subplot(8,1,7);
 plot(t,u(7,:),'c')
-hold on
+legend('u7')
+%u8
+subplot(8,1,8);
 plot(t,u(8,:),'k')
-legend('u1','u2','u3','u4','u5','u6','u7','u8')
+legend('u8')
+
 
 % subplot(3,1,3)
 % p = [zeros(1,399) 0.5*ones(1,iters)];
