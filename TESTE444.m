@@ -126,64 +126,64 @@ Nss = [Nss_1 Nss_2 Nss_3  Nss_4 Nss_5 Nss_6 Nss_7 ...
 
 %% Define os parametros de sintonia do Controle Preditivo
 
-%ajuste(funcao transferencia, atraso, lambda, delta, periodo de amostragem)
+%ajuste(funcao transferencia, atraso, periodo de amostragem)
 
 %G11
-[N1_g11, N2_g11, N_g11, Nu_g11, lambda_g11, delta_g11, t5_g11] = ajuste(G11, G11.InputDelay, 1, 1, TS);
+[N1_g11, N2_g11, N_g11, Nu_g11, t5_g11] = ajuste(G11, G11.InputDelay, TS);
 
 %G12
-[N1_g12, N2_g12, N_g12, Nu_g12, lambda_g12, delta_g12, t5_g12] = ajuste(G12, G12.InputDelay, 1, 1, TS);
+[N1_g12, N2_g12, N_g12, Nu_g12, t5_g12] = ajuste(G12, G12.InputDelay, TS);
 
 %G18
-[N1_g18, N2_g18, N_g18, Nu_g18, lambda_g18, delta_g18, t5_g18] = ajuste(G18, G18.InputDelay, 1, 1, TS);
+[N1_g18, N2_g18, N_g18, Nu_g18, t5_g18] = ajuste(G18, G18.InputDelay, TS);
 
 %G25
-[N1_g25, N2_g25, N_g25, Nu_g25, lambda_g25, delta_g25, t5_g25] = ajuste(G25, G25.InputDelay, 1, 1, TS);
+[N1_g25, N2_g25, N_g25, Nu_g25, t5_g25] = ajuste(G25, G25.InputDelay, TS);
 
 %G35
-[N1_g35, N2_g35, N_g35, Nu_g35, lambda_g35, delta_g35, t5_g35] = ajuste(G35, G35.InputDelay, 1, 1, TS);
+[N1_g35, N2_g35, N_g35, Nu_g35, t5_g35] = ajuste(G35, G35.InputDelay, TS);
 
 %G38
-[N1_g38, N2_g38, N_g38, Nu_g38, lambda_g38, delta_g38, t5_g38] = ajuste(G38, G38.InputDelay, 1, 1, TS);
+[N1_g38, N2_g38, N_g38, Nu_g38,  t5_g38] = ajuste(G38, G38.InputDelay, TS);
 
 %G41
-[N1_g41, N2_g41, N_g41, Nu_g41, lambda_g41, delta_g41, t5_g41] = ajuste(G41, G41.InputDelay, 1, 1, TS);
+[N1_g41, N2_g41, N_g41, Nu_g41, t5_g41] = ajuste(G41, G41.InputDelay, TS);
 
 %G42
-[N1_g42, N2_g42, N_g42, Nu_g42, lambda_g42, delta_g42, t5_g42] = ajuste(G42, G42.InputDelay, 1, 1, TS);
+[N1_g42, N2_g42, N_g42, Nu_g42, t5_g42] = ajuste(G42, G42.InputDelay,TS);
 
 %G44
-[N1_g44, N2_g44, N_g44, Nu_g44, lambda_g44, delta_g44, t5_g44] = ajuste(G44, G44.InputDelay, 1, 1, TS);
+[N1_g44, N2_g44, N_g44, Nu_g44, t5_g44] = ajuste(G44, G44.InputDelay,TS);
 
 %G48
-[N1_g48, N2_g48, N_g48, Nu_g48, lambda_g48, delta_g48, t5_g48] = ajuste(G48, G48.InputDelay, 1, 1, TS);
+[N1_g48, N2_g48, N_g48, Nu_g48, t5_g48] = ajuste(G48, G48.InputDelay, TS);
 
 %G54
-[N1_g54, N2_g54, N_g54, Nu_g54, lambda_g54, delta_g54, t5_g54] = ajuste(G54, G54.InputDelay, 1, 1, TS);
+[N1_g54, N2_g54, N_g54, Nu_g54, t5_g54] = ajuste(G54, G54.InputDelay, TS);
 
 %G56
-[N1_g56, N2_g56, N_g56, Nu_g56, lambda_g56, delta_g56, t5_g56] = ajuste(G56, G56.InputDelay, 1, 1, TS);
+[N1_g56, N2_g56, N_g56, Nu_g56, t5_g56] = ajuste(G56, G56.InputDelay, TS);
 
 %G57
-[N1_g57, N2_g57, N_g57, Nu_g57, lambda_g57, delta_g57, t5_g57] = ajuste(G57, G57.InputDelay, 1, 1, TS);
+[N1_g57, N2_g57, N_g57, Nu_g57, t5_g57] = ajuste(G57, G57.InputDelay, TS);
 
 %G66
-[N1_g66, N2_g66, N_g66, Nu_g66, lambda_g66, delta_g66, t5_g66] = ajuste(G66, G66.InputDelay, 1, 1, TS);
+[N1_g66, N2_g66, N_g66, Nu_g66, t5_g66] = ajuste(G66, G66.InputDelay, TS);
 
 %G71
-[N1_g71, N2_g71, N_g71, Nu_g71, lambda_g71, delta_g71, t5_g71] = ajuste(G71, G71.InputDelay, 1, 1, TS);
+[N1_g71, N2_g71, N_g71, Nu_g71, t5_g71] = ajuste(G71, G71.InputDelay, TS);
 
 %G81
-[N1_g81, N2_g81, N_g81, Nu_g81, lambda_g81, delta_g81, t5_g81] = ajuste(G81, G81.InputDelay, 1, 1, TS);
+[N1_g81, N2_g81, N_g81, Nu_g81, t5_g81] = ajuste(G81, G81.InputDelay, TS);
 
 %G82
-[N1_g82, N2_g82, N_g82, Nu_g82, lambda_g82, delta_g82, t5_g82] = ajuste(G82, G82.InputDelay, 1, 1, TS);
+[N1_g82, N2_g82, N_g82, Nu_g82, t5_g82] = ajuste(G82, G82.InputDelay, TS);
 
 %G83
-[N1_g83, N2_g83, N_g83, Nu_g83, lambda_g83, delta_g83, t5_g83] = ajuste(G83, G83.InputDelay, 1, 1, TS);
+[N1_g83, N2_g83, N_g83, Nu_g83, t5_g83] = ajuste(G83, G83.InputDelay, TS);
 
 %G88
-[N1_g88, N2_g88, N_g88, Nu_g88, lambda_g88, delta_g88, t5_g88] = ajuste(G88, G88.InputDelay, 1, 1, TS);
+[N1_g88, N2_g88, N_g88, Nu_g88, t5_g88] = ajuste(G88, G88.InputDelay, TS);
 
 
 NU = [Nu_g11 Nu_g12 0 0 0 0 0 Nu_g18;
@@ -370,12 +370,12 @@ H=   [ H_g11              H_g12              zeros(126,65)  zeros(126,44)  zeros
         H_g71               zeros(40,197)  zeros(40,65)    zeros(40,44)    zeros(40,85)     zeros(40,20)     zeros(40,47)    zeros(40,125);
         H_g81               H_g82               H_g83              zeros(40,44)    zeros(40,85)     zeros(40,20)     zeros(40,47)   H_g88
         ];
-
-%iteracoes
-iters = 6000;
         
 %%%%%%%%%SIMULACAO%%%%%%%%%%%%%%%%
 %% Condicoes iniciais
+
+%iteracoes
+iters = 5000;
 
 %matriz diagonal I
 I = [ones(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1);
@@ -388,60 +388,60 @@ I = [ones(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1
       zeros(40,1) zeros(40,1) zeros(40,1) zeros(40,1) zeros(40,1) zeros(40,1) zeros(40,1) ones(40,1)
       ]; 
 
+%horizontes de modelo, controle, inicial e predicao
+Nss = [307 197 65 44 85 20 47 125];
+Nu   = [45 26 12 4 19 2 8 19];  
+N1   = [1 1 1 1 1 1 1 1]';
+N2   = [126 17   53 62  22  3 40 40]';
+
 %vetores delta u passados da resposta livre
 %dimensao 1xNss
-du_pass1 = zeros(307,1);
-du_pass2 = zeros(197,1);
-du_pass3 = zeros(65,1);
-du_pass4 = zeros(44,1);
-du_pass5 = zeros(85,1);
-du_pass6 = zeros(20,1);
-du_pass7 = zeros(47,1);
-du_pass8 = zeros(125,1);
+du_pass1 = zeros(Nss(1),1);
+du_pass2 = zeros(Nss(2),1);
+du_pass3 = zeros(Nss(3),1);
+du_pass4 = zeros(Nss(4),1);
+du_pass5 = zeros(Nss(5),1);
+du_pass6 = zeros(Nss(6),1);
+du_pass7 = zeros(Nss(7),1);
+du_pass8 = zeros(Nss(8),1);
 du_passados = [du_pass1; du_pass2; du_pass3; du_pass4; du_pass5; du_pass6; du_pass7; du_pass8];
 
-%Nss
-Nss = [307 197 65 44 85 20 47 125];
+%vetor do sinal de controle
+u = zeros(8, iters);
 
-%vetores dos sinais de controle
-U = zeros(8, iters);
-
-%inicializando variaveis de incremento de controle
+%inicializando variavel de incremento de controle
 %dimensao 1xNu,l + 1xNu,2 + ... 1xNu,8
-deltaU = zeros(135,1);
+deltaU = zeros(sum(Nu),1);
 
 %vetores para guardar saidas 
- y = zeros(sum(N), 1);
- y_k = zeros(8,iters);
- 
- %referencia
- w = [zeros(1,2)  1*ones(1,600)  2*ones(1, iters) ]; 
+out = [ ]; 
+y = zeros(sum(N), 1);
+ysim = zeros(8,iters);
 
- y_simulado = [ ];
- t = 1:iters;
- 
- %N1 = [28   1      7   29 13   1 1    3]';  
- N1 = [1 1 1 1 1 1 1 1]';
- N2 = [126 17   53 62  22  3 40 40]';
- 
-r = [2*ones(1,6000);
-     0*ones(1,1000) 1*ones(1,5000);
-     0*ones(1,2000) 1*ones(1,4000)
-     0*ones(1,3000) 1*ones(1,3000)
-     0*ones(1,4000) 1*ones(1,2000)
-     0*ones(1,5000) 1*ones(1,1000)
-     0*ones(1,2000) 1*ones(1,4000)
-     0*ones(1,2000) 1*ones(1,4000)];
+%vetor do tempo
+t = 1:iters;
+
+%referencias
+r1 =  [zeros(1,100)  8*ones(1,4900)];
+r2 =  [zeros(1,200) 7.5*ones(1,4800)];
+r3 =  [zeros(1,300) 7*ones(1, 4700)];
+r4 =  [zeros(1,400) 6.5*ones(1,4600)];
+r5 =  [zeros(1,500) 6*ones(1,4500)];
+r6 =  [zeros(1,600) 5.5*ones(1,4400)];
+r7 =  [zeros(1,700) 5*ones(1,4300)];
+r8 =  [zeros(1,800) 4.5*ones(1,4200)];
+
+r = [r1;r2;r3;r4;r5;r6;r7;r8];
  
 %% DMC Loop
 
 for k=2:iters  
 
-inputs = U';
-y_simulado = lsim(Gu, inputs, t);
-y_k(:,k) = y_simulado(k,:)';
+inputs = u';
+out = lsim(Gu, inputs, t);
+ysim(:,k) = out(k,:)';
 
-y = G*deltaU + H*du_passados + I*y_k(:,k);
+y = G*deltaU + H*du_passados + I*ysim(:,k);
 
  %atualizacao deltaUs passados
  du_passados = [deltaU(1,1);
@@ -461,58 +461,85 @@ y = G*deltaU + H*du_passados + I*y_k(:,k);
                             deltaU(45+26+12+4+19+2+8+1,1);
                             du_passados(Nss(1)+Nss(2)+Nss(3)+Nss(4)+Nss(5)+Nss(6)+Nss(7)+1:Nss(1)+Nss(2)+Nss(3)+Nss(4)+Nss(5)+Nss(6)+Nss(7)+Nss(8)-1,1);
                             ];
+ 
+ %set point                       
+ sp = [8*ones(1,N(1)) 7.5*ones(1,N(2)) 7*ones(1,N(3)) 6.5*ones(1,N(4)) 6*ones(1,N(5)) 5.5*ones(1,N(6)) 5*ones(1,N(7)) 4.5*ones(1,N(8))]'; 
+        
+%calcula o controle 
+deltaU = K*(sp-y);
 
-%considera ref futura cte
-% ref1 =w(k)*ones(1,N(1))';
-% ref2 =w(k)*ones(1,N(2))';
-% ref3 =w(k)*ones(1,N(3))';
-% ref4 =w(k)*ones(1,N(4))';
-% ref5 =w(k)*ones(1,N(5))';
-% ref6 =w(k)*ones(1,N(6))';
-% ref7 =w(k)*ones(1,N(7))';
-% ref8 =w(k)*ones(1,N(8))';
-% 
-% ref = [ref1 ; ref2 ;  ref3 ; ref4 ; ref5 ; ref6; ref7; ref8];
-
-if k >= 3600
-        r_a = [2*ones(1,N(1)) ones(1,N(2)) ones(1,N(3)) ones(1,N(4)) ones(1,N(5)) ones(1,N(6)) ones(1,N(7)) ones(1,N(8))]';
-     else
-         r_a = [r(1,k+N1(1,1):k+N2(1,1)) r(2,k+N1(2,1):k+N2(2,1)) r(3,k+N1(3,1):k+N2(3,1)) r(4,k+N1(3,1):k+N2(4,1)) ...
-                  r(5,k+N1(5,1):k+N2(5,1)) r(6,k+N1(6,1):k+N2(6,1)) r(7,k+N1(7,1):k+N2(7,1)) r(8,k+N1(8,1):k+N2(8,1))]';
-end    
-    
- %calcula o controle 
-deltaU = K*(r_a-y);
-
-U(1,k) = U(1, k-1) + deltaU(1,1);
-U(2,k) = U(2, k-1) + deltaU(45+1,1);
-U(3,k) = U(3,k-1) + deltaU(45+26+1,1);
-U(4,k) = U(4,k-1) + deltaU(45+26+12+1,1);
-U(5,k) = U(5,k-1) + deltaU(45+26+12+4+1,1);
-U(6,k) = U(6,k-1) + deltaU(45+26+12+4+19+1,1);
-U(7,k) = U(7,k-1) + deltaU(45+26+12+4+19+2+1,1);
-U(8,k) = U(8,k-1) + deltaU(45+26+12+4+19+2+8+1,1);
-
-   
+%atualiza controle
+u(1,k) = u(1, k-1) + deltaU(1,1);
+u(2,k) = u(2, k-1) + deltaU(Nu(1)+1,1);
+u(3,k) = u(3,k-1) + deltaU(Nu(1)+Nu(2)+1,1);
+u(4,k) = u(4,k-1) + deltaU(Nu(1)+Nu(2)+Nu(3)+1,1);
+u(5,k) = u(5,k-1) + deltaU(Nu(1)+Nu(2)+Nu(3)+Nu(4)+1,1);
+u(6,k) = u(6,k-1) + deltaU(Nu(1)+Nu(2)+Nu(3)+Nu(4)+Nu(5)+1,1);
+u(7,k) = u(7,k-1) + deltaU(Nu(1)+Nu(2)+Nu(3)+Nu(4)+Nu(5)+Nu(6)+1,1);
+u(8,k) = u(8,k-1) + deltaU(Nu(1)+Nu(2)+Nu(3)+Nu(4)+Nu(5)+Nu(6)+Nu(7)+1,1);
 
 end
 
 
 %%  Graficos
 
+%saidas e referencias
 subplot(3,1,1)
-plot(t,y_simulado(:,1))
-hold
-plot(t,y_simulado(:,2))
-plot(t,r(1,:))
-plot(t,r(2,:))
-legend('saida 1','saida2', 'ref 1')
+plot(t,out(:,1), 'r')
+hold on
+plot(t,out(:,2), 'g')
+hold on
+plot(t,out(:,3), 'b')
+hold on
+plot(t,out(:,4), 'k')
+hold on
+plot(t,out(:,5), 'm')
+hold on
+plot(t,out(:,6), 'y')
+hold on
+plot(t,out(:,7), 'c')
+hold on
+plot(t,out(:,8), 'k')
+hold on
+plot(t,r(1,:), 'r')
+hold on
+plot(t,r(2,:), 'g')
+hold on
+plot(t,r(3,:), 'b')
+hold on
+plot(t,r(4,:),'k')
+hold on
+plot(t,r(5,:),'m')
+hold on
+plot(t,r(6,:),'y')
+hold on
+plot(t,r(7,:),'c')
+hold on
+plot(t,r(8,:),'k')
+legend('saida 1','saida2', 'saida3', 'saida4', 'saida5','saida6', 'saida7', 'saida8', ... 
+             'ref 1', 'ref 2', 'ref 3','ref 4','ref 5','ref 6','ref 7','ref 8')
 
-% subplot(3,1,2)
+%sinal de controle
+subplot(3,1,2);
+plot(t,u(1,:),'r')
+hold on
+plot(t,u(2,:),'g')
+hold on
+plot(t,u(3,:),'b')
+hold on
+plot(t,u(4,:),'k')
+hold on
+plot(t,u(5,:),'m')
+hold on
+plot(t,u(6,:),'y')
+hold on
+plot(t,u(7,:),'c')
+hold on
+plot(t,u(8,:),'k')
+legend('u1','u2','u3','u4','u5','u6','u7','u8')
+
+% subplot(3,1,3)
 % p = [zeros(1,399) 0.5*ones(1,iters)];
 % plot(p(1:500), 'g');
 % legend('perturbacao')
 
-subplot(3,1,2)
-plot(U(2:iters),'-r');
-legend('sinal de controle')
