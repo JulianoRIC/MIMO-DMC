@@ -388,8 +388,11 @@ Nu   = [45 26 12 4 19 2 8 19];
 %horizontes de predição 
 N   = [126 17   53 62  22  3 40 40]';
 
-lambda1 = 500; lambda2 = 100; lambda3 = 100; lambda4 = 100; lambda5 = 100; lambda6 = 100; lambda7 = 100; lambda8 = 100;
-delta1     =  10; delta2 = 100;     delta3 = 100;     delta4 = 1;     delta5 = 10;      delta6=1;       delta7=100;       delta8=100;
+%lambda1 = 500; lambda2 = 100; lambda3 = 100; lambda4 = 100; lambda5 = 100; lambda6 = 100; lambda7 = 500; lambda8 = 100;
+%delta1     =  10; delta2 = 100;     delta3 = 100;     delta4 = 1;     delta5 = 10;      delta6=1;       delta7=500;       delta8=100;
+
+lambda1 = 100; lambda2 = 100; lambda3 = 100; lambda4 = 100; lambda5 = 100; lambda6 = 100; lambda7 = 500; lambda8 = 100;
+delta1     =  10; delta2 = 100;     delta3 = 100;     delta4 = 1;     delta5 = 10;      delta6=1;       delta7=500;       delta8=100;
 
 
 Qu = [  lambda1*eye(Nu(1))            zeros(45,26)                     zeros(45,12)                     zeros(45,4)                           zeros(45,19)                         zeros(45,2)                         zeros(45,8)                            zeros(45,19);
@@ -523,7 +526,7 @@ Hq = [
 %% Condicoes iniciais
 
 %iteracoes
-iters = 5000;
+iters = 1000;
 
 %matriz diagonal I
 I = [ones(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1);
@@ -576,21 +579,21 @@ ysim = zeros(8,iters);
 t = 1:iters;
 
 %vetores das referencias
-w1 =  [zeros(1,100)  1.5*ones(1,4900)];
-w2 =  [zeros(1,200)  3*ones(1,4800)];
-w3 =  [zeros(1,300) 1.5*ones(1, 4700)];
-w4 =  [zeros(1,400) 3*ones(1,4600)];
-w5 =  [zeros(1,500) 1.5*ones(1,4500)];
-w6 =  [zeros(1,600) 3*ones(1,4400)];
-w7 =  [zeros(1,700) 1.5*ones(1,4300)];
-w8 =  [zeros(1,800) 3*ones(1,4200)];
+w1 =  [zeros(1,iters/10)  5*ones(1,iters - iters/10)];
+w2 =  [zeros(1,iters/10)  3*ones(1, iters- iters/10)];
+w3 =  [zeros(1,iters/10) 1.5*ones(1, iters-iters/10)];
+w4 =  [zeros(1,iters/10) 3*ones(1,iters- iters/10)];
+w5 =  [zeros(1,iters/10) 1.5*ones(1,iters -iters/10)];
+w6 =  [zeros(1,iters/10) 3*ones(1,iters- iters/10)];
+w7 =  [zeros(1,iters/10) 1.5*ones(1,iters - iters/10)];
+w8 =  [zeros(1,iters/10) 3*ones(1,iters-iters/10)];
 
 w = [w1;w2;w3;w4;w5;w6;w7;w8];
 
 %vetores da perturbacao
-q1 = [zeros(1,1000)  01*ones(1,4000)];
-q2 = [zeros(1,1500)  0.1*ones(1,3500)];
-q3 = [zeros(1,2000)  0.1*ones(1,3000)];
+q1 = [zeros(1,3*iters/10)  0.1*ones(1,iters - 3*iters/10)];
+q2 = [zeros(1,5*iters/10)  0.1*ones(1,iters - 5*iters/10)];
+q3 = [zeros(1,7*iters/10)  0.1*ones(1,iters - 7*iters/10)];
 q = [q1;
        q2;
        q3];
@@ -626,10 +629,10 @@ end
 dq_passados = [dq_pass1; dq_pass2; dq_pass3];
 
 %sem feedforward
-%y = G*deltaU + H*du_passados + I*ysim(:,k);
+y = G*deltaU + H*du_passados + I*ysim(:,k);
 
 %com feedforward
-y = G*deltaU + H*du_passados + I*ysim(:,k) + Hq*dq_passados;
+%y = G*deltaU + H*du_passados + I*ysim(:,k) + Hq*dq_passados;
 
 %atualizacao deltaUs passados
  du_passados = [deltaU(1,1);
@@ -664,7 +667,7 @@ ref8 =w8(k)*ones(1,N(8))';
 ref = [ref1 ; ref2 ;  ref3 ; ref4 ; ref5 ; ref6; ref7; ref8];
         
 %calcula o controle 
-deltaU   = K*(ref-y);
+deltaU   = K*(ref-y );
 
 %atualiza controle
 u(1,k) = u(1, k-1) + deltaU(1,1);
@@ -778,7 +781,8 @@ subplot(8,1,8);
 plot(t,u(8,:),'k')
 legend('u8')
 
-figure(3)
-p = [zeros(1,399) 5.5*ones(1,iters)];
-plot(p(1:iters), 'g');
-legend('perturbacao 1')
+% 
+% figure(3)
+% p = [zeros(1,399) 5.5*ones(1,iters)];
+% plot(p(1:iters), 'g');
+% legend('perturbacao 1')
