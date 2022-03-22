@@ -42,27 +42,27 @@ Gu =  [
           ];
 
 %funcoes de transferencia em relacao a perturbacao
-G1_2 =  tf([0.01366 -0.0128 -0.01706], [1 -1.915 0.9191], TS, 'InputDelay', 20);
-G21   =  tf([0.00236 0.002173], [1 -0.9518 0.1157], TS);
-G22   =  tf([4.68 -3.722], [1 -0.8786 3.875e-5], TS, 'InputDelay', 20);
-G4_2 =  tf([-0.00611 0.005808 0.007654], [1 -1.914 0.9181], TS, 'InputDelay', 20);
-G53   =  tf([0.03646 -0.006099 -0.02366], [1 -1.444 0.4712], TS, 'InputDelay', 6);
-G63   =  tf([0.5015 0.2255], [1 -0.3526 0.0961], TS);
-G7_1 =  tf([0.0004086 -0.0003754], [1 -1.306 0.3331], TS);
-G72   =  tf([0.07873 -0.07549], [1 -1.176 0.2297], TS);
-G8_1 =  tf([3.153e-5 -2.93810e-5], [1 -1.9  0.903], TS);
-G8_2 =  tf([0 0.008119], [1 -0.956], TS);
+Gd12 =  tf([0.01366 -0.0128 -0.01706], [1 -1.915 0.9191], TS, 'InputDelay', 20);
+Gd21   =  tf([0.00236 0.002173], [1 -0.9518 0.1157], TS);
+Gd22   =  tf([4.68 -3.722], [1 -0.8786 3.875e-5], TS, 'InputDelay', 20);
+Gd42 =  tf([-0.00611 0.005808 0.007654], [1 -1.914 0.9181], TS, 'InputDelay', 20);
+Gd53   =  tf([0.03646 -0.006099 -0.02366], [1 -1.444 0.4712], TS, 'InputDelay', 6);
+Gd63   =  tf([0.5015 0.2255], [1 -0.3526 0.0961], TS);
+Gd71 =  tf([0.0004086 -0.0003754], [1 -1.306 0.3331], TS);
+Gd72   =  tf([0.07873 -0.07549], [1 -1.176 0.2297], TS);
+Gd81 =  tf([3.153e-5 -2.93810e-5], [1 -1.9  0.903], TS);
+Gd82 =  tf([0 0.008119], [1 -0.956], TS);
 
 % matriz perturbacao
 Gw = [
-           0      G1_2  0;
-           G21 G22    0;
-           0       0        0;
-           0      G4_2  0;
-           0      0     G53;
-           0      0     G63;
-           G7_1 G72   0;
-           G8_1 G8_2 0
+           0         Gd12     0;
+           Gd21  Gd22    0;
+           0         0            0;
+           0         Gd42     0;
+           0         0            Gd53;
+           0         0            Gd63;
+           Gd71 Gd72     0;
+           Gd81 Gd82     0
            ];
                 
 %% Vector de coeficientes Gi
@@ -123,6 +123,47 @@ Nss_19 = 31;
 Nss = [Nss_1 Nss_2 Nss_3  Nss_4 Nss_5 Nss_6 Nss_7 ...
             Nss_8  Nss_9 Nss_10 Nss_11 Nss_12 Nss_13  ...
             Nss_14 Nss_15 Nss_16 Nss_17 Nss_18 Nss_19]; 
+        
+ %% Vetor de coeficientes de Gdi
+gd12  =  step(Gd12)'; 
+Nss_d1 =  137;
+
+gd21  =  step(Gd21)'; 
+gd21(1) = [ ];
+Nss_d2 =  20;
+
+gd22  =  step(Gd22)'; 
+gd22(1) = [ ];
+Nss_d3 =  68;
+
+gd42  =  step(Gd42)'; 
+Nss_d4 =  137;
+
+gd53  =  step(Gd53)'; 
+Nss_d5 =  63;
+
+gd63  =  step(Gd63)'; 
+gd63(1) = [ ];
+Nss_d6 =  7;
+
+gd71  =  step(Gd71)'; 
+gd71(1) = [ ];
+Nss_d7 = 115 ;
+
+gd72  =  step(Gd72)'; 
+gd72(1) = [ ];
+Nss_d8 =  23;
+
+gd81  =  step(Gd81)'; 
+gd81(1) = [ ];
+Nss_d9 =  69;
+
+gd82  =  step(Gd82)'; 
+gd82(1) = [ ];
+Nss_d10 =  84;
+ 
+Nss_d = [Nss_d1 Nss_d2 Nss_d3  Nss_d4  Nss_d5 ...
+                Nss_d6 Nss_d7 Nss_d8 Nss_d9 Nss_d10]; 
 
 %% Define os parametros de sintonia do Controle Preditivo
 
@@ -194,13 +235,13 @@ NU = [Nu_g11 Nu_g12 0 0 0 0 0 Nu_g18;
           0 0 0 0 0 Nu_g66 0 0;
           Nu_g71 0 0 0 0 0 0 0;
           Nu_g81 Nu_g82 Nu_g83 0 0 0 0 Nu_g88];
-
+      
 %% Levantamento das matrizes dinamicas G
 
 [GG11] = matrizDin(N_g11, Nu_g11, G11.InputDelay, g11) ;
 [GG41] = matrizDin(N_g41, Nu_g41, G41.InputDelay, g41) ;
 [GG71] = matrizDin(N_g71, Nu_g71, G71.InputDelay, g71) ;
-[GG81] = matrizDin(N_g81,Nu_g81, G81.InputDelay, g81);
+[GG81] = matrizDin(N_g81, Nu_g81, G81.InputDelay, g81);
   
 [GG12] = matrizDin(N_g12, Nu_g12, G12.InputDelay, g12) ;
 [GG42] = matrizDin(N_g42, Nu_g42, G42.InputDelay, g42) ;
@@ -272,51 +313,50 @@ GG88 = reshapeCol(NU, GG88, 8);
 
 %% Matriz DInamica G
 
-G=   [ GG11                GG12                zeros(126,12)  zeros(126,4)  zeros(126,19)  zeros(126,2)  zeros(126,8)   GG18; 
-          zeros(17,45)     zeros(17,26)     zeros(17,12)    zeros(17,4)   GG25                zeros(17,2)     zeros(17,8)     zeros(17,19);
-          zeros(53,45)     zeros(53,26)     zeros(53,12)    zeros(53,4)   GG35                zeros(53,2)     zeros(53,8)     GG38;
-          GG41                GG42                zeros(62,12)    GG44            zeros(62,19)     zeros(62,2)     zeros(62,8)     GG48;
-          zeros(22,45)     zeros(22,26)    zeros(22,12)    GG54             zeros(22,19)     GG56              GG57              zeros(22,19);
-          zeros(3,45)       zeros(3,26)      zeros(3,12)       zeros(3,4)      zeros(3,19)       GG66              zeros(3,8)       zeros(3,19)
-          GG71                zeros(40,26)    zeros(40,12)    zeros(40,4)    zeros(40,19)     zeros(40,2)     zeros(40,8)     zeros(40,19);
-          GG81                GG82               GG83                zeros(40,4)   zeros(40,19)     zeros(40,2)     zeros(40,8)     GG88
+%horizontes de controle
+Nu   = [45 26 12 4 19 2 8 19];
+
+%horizontes de predição 
+N   = [126 17   53 62  22  3 40 40]';
+
+G=   [ GG11                      GG12                     zeros(N(1),Nu(3))  zeros(N(1),Nu(4))  zeros(N(1),Nu(5))  zeros(N(1),Nu(6))  zeros(N(1),Nu(7)) GG18; 
+          zeros(N(2),Nu(1))   zeros(N(2),Nu(2))   zeros(N(2),Nu(3))  zeros(N(2),Nu(4))  GG25                    zeros(N(2),Nu(6))  zeros(N(2),Nu(7))  zeros(N(2),Nu(8));
+          zeros(N(3),Nu(1))   zeros(N(3),Nu(2))   zeros(N(3),Nu(3))  zeros(N(3),Nu(4))  GG35                    zeros(N(3),Nu(6))  zeros(N(3),Nu(7)) GG38;
+          GG41                      GG42                      zeros(N(4),Nu(3))  GG44                     zeros(N(4),Nu(5)) zeros(N(4),Nu(6))  zeros(N(4),Nu(7)) GG48;
+          zeros(N(5),Nu(1))   zeros(N(5),Nu(2))   zeros(N(5),Nu(3))  GG54                     zeros(N(5),Nu(5)) GG56                     GG57                    zeros(N(5),Nu(8));
+          zeros(N(6),Nu(1))   zeros(N(6),Nu(2))   zeros(N(6),Nu(3))  zeros(N(6),Nu(4))  zeros(N(6),Nu(5)) GG66                     zeros(N(6),Nu(7)) zeros(N(6),Nu(8))
+          GG71                     zeros(N(7),Nu(2))    zeros(N(7),Nu(3))  zeros(N(7),Nu(4))  zeros(N(7),Nu(5)) zeros(N(7),Nu(6))  zeros(N(7),Nu(7)) zeros(N(7),Nu(8));
+          GG81                     GG82                       GG83                     zeros(N(8),Nu(4))  zeros(N(8),Nu(5)) zeros(N(8),Nu(6))  zeros(N(8),Nu(7)) GG88
        ];
 
 %% Calculo da matriz K (primeira linha)
 
-lambda1 = 10; lambda2 = 10; lambda3 = 10; lambda4 = 10; lambda5 = 10; lambda6 = 10; lambda7 = 10; lambda8 = 10;
-delta1     = 10; delta2 = 10;     delta3 = 10;     delta4 = 10;     delta5 = 10;      delta6=10;       delta7=10;       delta8=10;
+lambda1 = 100; lambda2 = 100; lambda3 = 10; lambda4 = 100; lambda5 = 100; lambda6 = 100; lambda7 = 500; lambda8 = 100;
+delta1     =  10; delta2 = 100;     delta3 = 100;     delta4 = 1;     delta5 = 10;      delta6=1;       delta7=500;       delta8=100;
 
-
-Qu = [  lambda1*eye(Nu_g11)        zeros(45,26)                          zeros(45,12)                        zeros(45,4)                           zeros(45,19)                         zeros(45,2)                         zeros(45,8)                            zeros(45,19);
-            zeros(26,45)                         lambda2*eye(Nu_g12)         zeros(26,12)                         zeros(26,4)                           zeros(26,19)                         zeros(26,2)                         zeros(26,8)                            zeros(26,19);
-            zeros(12,45)                         zeros(12,26)                         lambda3*eye(Nu_g83)        zeros(12,4)                           zeros(12,19)                         zeros(12,2)                         zeros(12,8)                            zeros(12,19);
-            zeros(4,45)                           zeros(4,26)                            zeros(4,12)                           lambda4*eye(Nu_g54)       zeros(4,19)                           zeros(4,2)                            zeros(4,8)                              zeros(4,19);
-            zeros(19,45)                         zeros(19,26)                         zeros(19,12)                         zeros(19,4)                          lambda5*eye(Nu_g35)        zeros(19,2)                          zeros(19,8)                            zeros(19,19);
-            zeros(2,45)                           zeros(2,26)                            zeros(2,12)                           zeros(2,4)                            zeros(2,19)                          lambda6*eye(Nu_g66)         zeros(2,8)                               zeros(2,19)
-            zeros(8,45)                           zeros(8,26)                            zeros(8,12)                           zeros(8,4)                            zeros(8,19)                           zeros(8,2)                            lambda7*eye(Nu_g57)            zeros(8,19);
-            zeros(19,45)                         zeros(19,26)                          zeros(19,12)                        zeros(19,4)                          zeros(19,19)                         zeros(19,2)                          zeros(19,8)                            lambda8*eye(Nu_g38);
+Qu = [  lambda1*eye(Nu(1))  zeros(Nu(1),Nu(2))    zeros(Nu(1),Nu(3))    zeros(Nu(1),Nu(4))     zeros(Nu(1),Nu(5))     zeros(Nu(1),Nu(6))     zeros(Nu(1),Nu(7))     zeros(Nu(1),Nu(8));
+            zeros(Nu(2),Nu(1))     lambda2*eye(Nu(2)) zeros(Nu(2),Nu(3))    zeros(Nu(2),Nu(4))     zeros(Nu(2),Nu(5))     zeros(Nu(2),Nu(6))     zeros(Nu(2),Nu(7))     zeros(Nu(2),Nu(8));
+            zeros(Nu(3),Nu(1))     zeros(Nu(3),Nu(2))    lambda3*eye(Nu(3)) zeros(Nu(3),Nu(4))     zeros(Nu(3),Nu(5))     zeros(Nu(3),Nu(6))     zeros(Nu(3),Nu(7))     zeros(Nu(3),Nu(8));
+            zeros(Nu(4),Nu(1))     zeros(Nu(4),Nu(2))    zeros(Nu(4),Nu(3))    lambda4*eye(Nu(4))  zeros(Nu(4),Nu(5))     zeros(Nu(4),Nu(6))     zeros(Nu(4),Nu(7))     zeros(Nu(4),Nu(8));
+            zeros(Nu(5),Nu(1))     zeros(Nu(5),Nu(2))    zeros(Nu(5),Nu(3))    zeros(Nu(5),Nu(4))     lambda5*eye(Nu(5))  zeros(Nu(5),Nu(6))     zeros(Nu(5),Nu(7))     zeros(Nu(5),Nu(8));
+            zeros(Nu(6),Nu(1))     zeros(Nu(6),Nu(2))    zeros(Nu(6),Nu(3))    zeros(Nu(6),Nu(4))     zeros(Nu(6),Nu(5))     lambda6*eye(Nu(6))  zeros(Nu(6),Nu(7))     zeros(Nu(6),Nu(8))
+            zeros(Nu(7),Nu(1))     zeros(Nu(7),Nu(2))    zeros(Nu(7),Nu(3))    zeros(Nu(7),Nu(4))     zeros(Nu(7),Nu(5))     zeros(Nu(7),Nu(6))     lambda7*eye(Nu(7))  zeros(Nu(7),Nu(8));
+            zeros(Nu(8),Nu(1))     zeros(Nu(8),Nu(2))    zeros(Nu(8),Nu(3))    zeros(Nu(8),Nu(4))     zeros(Nu(8),Nu(5))     zeros(Nu(8),Nu(6))     zeros(Nu(8),Nu(7))     lambda8*eye(Nu(8));
             ];
-   
-Qy = [  delta1*eye(126)             zeros(126,17)                zeros(126,53)              zeros(126,62)              zeros(126,22)              zeros(126,3)             zeros(126,40)               zeros(126,40);
-            zeros(17,126)               delta2*eye(17)               zeros(17,53)                zeros(17,62)                 zeros(17,22)                zeros(17,3)               zeros(17,40)                 zeros(17,40);
-            zeros(53,126)                zeros(53,17)                  delta3*eye(53)            zeros(53,62)                 zeros(53,22)                zeros(53,3)               zeros(53,40)                 zeros(53,40);
-            zeros(62,126)                zeros(62,17)                  zeros(62,53)                delta4*eye(62)             zeros(62,22)                zeros(62,3)               zeros(62,40)                 zeros(62,40);
-            zeros(22,126)                zeros(22,17)                  zeros(22,53)                zeros(22,62)                 delta5*eye(22)            zeros(22,3)               zeros(22,40)                 zeros(22,40);
-            zeros(3,126)                  zeros(3,17)                     zeros(3,53)                  zeros(3,62)                   zeros(3,22)                  delta6*eye(3)            zeros(3,40)                   zeros(3,40)
-            zeros(40,126)                zeros(40,17)                   zeros(40,53)               zeros(40,62)                 zeros(40,22)                zeros(40,3)               delta7*eye(40)             zeros(40,40);
-            zeros(40,126)                zeros(40,17)                   zeros(40,53)               zeros(40,62)                 zeros(40,22)                zeros(40,3)               zeros(40,40)                 delta8*eye(40);
+        
+Qy = [  delta1*eye(N(1))    zeros(N(1),N(2))  zeros(N(1),N(3))   zeros(N(1),N(4))  zeros(N(1),N(5))  zeros(N(1),N(6))  zeros(N(1),N(7))  zeros(N(1),N(8));
+            zeros(N(2),N(1))    delta2*eye(N(2))  zeros(N(2),N(3))   zeros(N(2),N(4))  zeros(N(2),N(5))  zeros(N(2),N(6))  zeros(N(2),N(7))  zeros(N(2),N(8));
+            zeros(N(3),N(1))    zeros(N(3),N(2))  delta3*eye(N(3))   zeros(N(3),N(4))  zeros(N(3),N(5))  zeros(N(3),N(6))  zeros(N(3),N(7))  zeros(N(3),N(8));
+            zeros(N(4),N(1))    zeros(N(4),N(2))   zeros(N(4),N(3))  delta4*eye(N(4))  zeros(N(4),N(5))  zeros(N(4),N(6))  zeros(N(4),N(7))  zeros(N(4),N(8));
+            zeros(N(5),N(1))    zeros(N(5),N(2))   zeros(N(5),N(3))  zeros(N(5),N(4))  delta5*eye(N(5))  zeros(N(5),N(6))  zeros(N(5),N(7))  zeros(N(5),N(8));
+            zeros(N(6),  N(1))  zeros(N(6),N(2))   zeros(N(6),N(3))  zeros(N(6),N(4))  zeros(N(6),N(5))  delta6*eye(N(6))  zeros(N(6),N(7))  zeros(N(6),N(8))
+            zeros(N(7),N(1))    zeros(N(7),N(2))   zeros(N(7),N(3))  zeros(N(7),N(4))  zeros(N(7),N(5))  zeros(N(7),N(6))  delta7*eye(N(7))  zeros(N(7),N(8));
+            zeros(N(8),N(1))    zeros(N(8),N(2))   zeros(N(8),N(3))  zeros(N(8),N(4))  zeros(N(8),N(5))  zeros(N(8),N(6))  zeros(N(8),N(7))  delta8*eye(N(8));
             ];
 
-K = inv(G'*Qy*G + Qu)*G';
+K = inv(G'*Qy*G + Qu)*G'*Qy;
 
 %% Calculando resposta livre
-
-%vetor das matrizes Gs
-Gs = [G11 G12 G18 G25 G35 G38 G41 G42 G44 G48 ...
-            G54 G56 G57 G66 G71 G81 G82 G83 G88];    
-        
-N= [126 17 53 62 22 3 40 40];
 
 H_g11 = calculoH(Nss,1, g11, N(1));
 H_g12 = calculoH(Nss,2, g12, N(1));
@@ -360,39 +400,79 @@ H_g66 = [H_g66 zeros(size(H_g66,1),  max(sizeH(:,6)) - size(H_g66,2))];
 H_g18 = [H_g18 zeros(size(H_g18,1),  max(sizeH(:,8)) - size(H_g18,2))];
 H_g38 = [H_g38 zeros(size(H_g38,1),  max(sizeH(:,8)) - size(H_g38,2))];
 H_g88 = [H_g88 zeros(size(H_g88,1),  max(sizeH(:,8)) - size(H_g88,2))];
-           
-H=   [ H_g11              H_g12              zeros(126,65)  zeros(126,44)  zeros(126,85)  zeros(126,20)  zeros(126,47) H_g18; 
-        zeros(17,307)   zeros(17,197)  zeros(17,65)    zeros(17,44)    H_g25               zeros(17,20)    zeros(17,47)   zeros(17,125);
-        zeros(53,307)   zeros(53,197)  zeros(53,65)    zeros(53,44)    H_g35               zeros(53,20)    zeros(53,47)   H_g38;
-        H_g41                H_g42              zeros(62,65)    H_g44              zeros(62,85)     zeros(62,20)    zeros(62,47)   H_g48;
-        zeros(22,307)   zeros(22,197)  zeros(22,65)    H_g54              zeros(22,85)     H_g56               H_g57             zeros(22,125);
-        zeros(3,307)     zeros(3,197)    zeros(3,65)      zeros(3,44)       zeros(3,85)       H_g66               zeros(3,47)     zeros(3,125)
-        H_g71               zeros(40,197)  zeros(40,65)    zeros(40,44)    zeros(40,85)     zeros(40,20)     zeros(40,47)    zeros(40,125);
-        H_g81               H_g82               H_g83              zeros(40,44)    zeros(40,85)     zeros(40,20)     zeros(40,47)   H_g88
+
+Nss = [307 197 65 44 85 20  47 125];
+
+H=   [ H_g11                      H_g12                     zeros(N(1),Nss(3))   zeros(N(1),Nss(4))   zeros(N(1),Nss(5))  zeros(N(1),Nss(6))  zeros(N(1),Nss(7))   H_g18; 
+        zeros(N(2),Nss(1))   zeros(N(2),Nss(2))  zeros(N(2),Nss(3))   zeros(N(2),Nss(4))   H_g25                      zeros(N(2),Nss(6))  zeros(N(2),Nss(7))   zeros(N(2),Nss(8));
+        zeros(N(3),Nss(1))   zeros(N(3),Nss(2))  zeros(N(3),Nss(3))   zeros(N(3),Nss(4))   H_g35                      zeros(N(3),Nss(6))  zeros(N(3),Nss(7))   H_g38;
+        H_g41                       H_g42                      zeros(N(4),Nss(3))   H_g44                      zeros(N(4),Nss(5))   zeros(N(4),Nss(6))  zeros(N(4),Nss(7))   H_g48;
+        zeros(N(5),Nss(1))   zeros(N(5),Nss(2))  zeros(N(5),Nss(3))   H_g54                       zeros(N(5),Nss(5))  H_g56                      H_g57                       zeros(N(5),Nss(8));
+        zeros(N(6),Nss(1))   zeros(N(6),Nss(2))  zeros(N(6),Nss(3))   zeros(N(6),Nss(4))   zeros(N(6),Nss(5))  H_g66                      zeros(N(6),Nss(7))   zeros(N(6),Nss(8))
+        H_g71                       zeros(N(7),Nss(2))  zeros(N(7),Nss(3))   zeros(N(7),Nss(4))   zeros(N(7),Nss(5))  zeros(N(7),Nss(6))  zeros(N(7),Nss(7))   zeros(N(7),Nss(8));
+        H_g81                       H_g82                      H_g83                       zeros(N(8),Nss(4))   zeros(N(8),Nss(5))  zeros(N(8),Nss(6))  zeros(N(8),Nss(7))   H_g88
         ];
-        
-%%%%%%%%%SIMULACAO%%%%%%%%%%%%%%%%
+  
+ %% Calculando H para as perturbacoes 
+ Hd_g12 = calculoH(Nss_d,1, gd12, N(1));
+ Hd_g21 = calculoH(Nss_d,2, gd21, N(2));
+ Hd_g22 = calculoH(Nss_d,3, gd22, N(2));
+ Hd_g42 = calculoH(Nss_d,4, gd42, N(4));
+ Hd_g53 = calculoH(Nss_d,5, gd53, N(5));
+ Hd_g63 = calculoH(Nss_d,6, gd63, N(6));
+ Hd_g71 = calculoH(Nss_d,7, gd71, N(7));
+ Hd_g72 = calculoH(Nss_d,8, gd72, N(7));
+ Hd_g81 = calculoH(Nss_d,9, gd81,   N(8));
+ Hd_g82 = calculoH(Nss_d,10, gd82, N(8));
+ 
+ sizeHd = [
+           0        size(Hd_g12,2)    0;
+          size(Hd_g21,2)  size(Hd_g22,2)    0;
+           0         0            0;
+           0         size(Hd_g42,2)     0;
+           0         0            size(Hd_g53,2);
+           0         0            size(Hd_g63,2);
+           size(Hd_g71,2) size(Hd_g72,2)     0;
+           size(Hd_g81,2) size(Hd_g82,2)     0
+           ];
+ 
+ %ajustando colunas
+Hd_g21 = [Hd_g21 zeros(size(Hd_g21,1),  max(sizeHd(:,1)) - size(Hd_g21,2))];
+Hd_g81 = [Hd_g81 zeros(size(Hd_g81,1),  max(sizeHd(:,1)) - size(Hd_g81,2))];
+Hd_g22 = [Hd_g22 zeros(size(Hd_g22,1),  max(sizeHd(:,2)) - size(Hd_g22,2))];
+Hd_g72 = [Hd_g72 zeros(size(Hd_g72,1),  max(sizeHd(:,2)) - size(Hd_g72,2))];
+Hd_g82 = [Hd_g82 zeros(size(Hd_g82,1),  max(sizeHd(:,2)) - size(Hd_g82,2))];
+Hd_g63 = [Hd_g63 zeros(size(Hd_g63,1),  max(sizeHd(:,3)) - size(Hd_g63,2))]; 
+
+Nssd = [115 137 63];
+
+Hq = [
+           zeros(N(1),Nssd(1))    Hd_g12                     zeros(N(1),Nssd(3));
+           Hd_g21                        Hd_g22                     zeros(N(2),Nssd(3));
+           zeros(N(3),Nssd(1))    zeros(N(3),Nssd(2))  zeros(N(3),Nssd(3));
+           zeros(N(4),Nssd(1))    Hd_g42                      zeros(N(4),Nssd(3));
+           zeros(N(5),Nssd(1))    zeros(N(5),Nssd(2))  Hd_g53;
+           zeros(N(6),Nssd(1))    zeros(N(6),Nssd(2))  Hd_g63;
+           Hd_g71                        Hd_g72                     zeros(N(7),Nssd(3));
+           Hd_g81                        Hd_g82                     zeros(N(8),Nssd(3))
+           ];
+       
+ %%%%%%%%%SIMULACAO%%%%%%%%%%%%%%%%
 %% Condicoes iniciais
 
 %iteracoes
 iters = 5000;
 
 %matriz diagonal I
-I = [ones(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1) zeros(126,1);
-      zeros(17,1)  ones(17,1) zeros(17,1) zeros(17,1) zeros(17,1) zeros(17,1) zeros(17,1) zeros(17,1);
-      zeros(53,1)   zeros(53,1) ones(53,1) zeros(53,1) zeros(53,1) zeros(53,1) zeros(53,1) zeros(53,1);
-      zeros(62,1)   zeros(62,1) zeros(62,1) ones(62,1) zeros(62,1) zeros(62,1) zeros(62,1) zeros(62,1);
-      zeros(22,1)  zeros(22,1)  zeros(22,1) zeros(22,1) ones(22,1) zeros(22,1) zeros(22,1) zeros(22,1);
-      zeros(3,1) zeros(3,1) zeros(3,1) zeros(3,1) zeros(3,1)  ones(3,1) zeros(3,1)  zeros(3,1) ;
-     zeros(40,1) zeros(40,1) zeros(40,1) zeros(40,1) zeros(40,1) zeros(40,1) ones(40,1) zeros(40,1);
-      zeros(40,1) zeros(40,1) zeros(40,1) zeros(40,1) zeros(40,1) zeros(40,1) zeros(40,1) ones(40,1)
+I = [ones(N(1),1) zeros(N(1),1) zeros(N(1),1) zeros(N(1),1) zeros(N(1),1) zeros(N(1),1) zeros(N(1),1) zeros(N(1),1);
+      zeros(N(2),1)  ones(N(2),1) zeros(N(2),1) zeros(N(2),1) zeros(N(2),1) zeros(N(2),1) zeros(N(2),1) zeros(N(2),1);
+      zeros(N(3),1)   zeros(N(3),1) ones(N(3),1) zeros(N(3),1) zeros(N(3),1) zeros(N(3),1) zeros(N(3),1) zeros(N(3),1);
+      zeros(N(4),1)   zeros(N(4),1) zeros(N(4),1) ones(N(4),1) zeros(N(4),1) zeros(N(4),1) zeros(N(4),1) zeros(N(4),1);
+      zeros(N(5),1)  zeros(N(5),1)  zeros(N(5),1) zeros(N(5),1) ones(N(5),1) zeros(N(5),1) zeros(N(5),1) zeros(N(5),1);
+      zeros(N(6),1) zeros(N(6),1) zeros(N(6),1) zeros(N(6),1) zeros(N(6),1)  ones(N(6),1) zeros(N(6),1)  zeros(N(6),1) ;
+      zeros(N(7),1) zeros(N(7),1) zeros(N(7),1) zeros(N(7),1) zeros(N(7),1) zeros(N(7),1) ones(N(7),1) zeros(N(7),1);
+      zeros(N(8),1) zeros(N(8),1) zeros(N(8),1) zeros(N(8),1) zeros(N(8),1) zeros(N(8),1) zeros(N(8),1) ones(N(8),1)
       ]; 
-
-%horizontes de modelo, controle, inicial e predicao
-Nss = [307 197 65 44 85 20 47 125];
-Nu   = [45 26 12 4 19 2 8 19];  
-N1   = [1 1 1 1 1 1 1 1]';
-N2   = [126 17   53 62  22  3 40 40]';
 
 %vetores delta u passados da resposta livre
 %dimensao 1xNss
@@ -422,46 +502,82 @@ ysim = zeros(8,iters);
 t = 1:iters;
 
 %vetores das referencias
-w1 =  [zeros(1,100)  8*ones(1,4900)];
-w2 =  [zeros(1,200) 7.5*ones(1,4800)];
-w3 =  [zeros(1,300) 7*ones(1, 4700)];
-w4 =  [zeros(1,400) 6.5*ones(1,4600)];
-w5 =  [zeros(1,500) 6*ones(1,4500)];
-w6 =  [zeros(1,600) 5.5*ones(1,4400)];
-w7 =  [zeros(1,700) 5*ones(1,4300)];
-w8 =  [zeros(1,800) 4.5*ones(1,4200)];
+w1 =  [zeros(1,iters/50)     1.5*ones(1,iters - iters/50)];
+w2 =  [zeros(1,2*iters/50)  3*ones(1, iters- 2*iters/50)];
+w3 =  [zeros(1,3*iters/50) 1.5*ones(1, iters-3*iters/50)];
+w4 =  [zeros(1,4*iters/50) 3*ones(1,iters- 4*iters/50)];
+w5 =  [zeros(1,5*iters/50) 1.5*ones(1,iters -5*iters/50)];
+w6 =  [zeros(1,6*iters/50) 3*ones(1,iters- 6*iters/50)];
+w7 =  [zeros(1,7*iters/50) 1.5*ones(1,iters - 7*iters/50)];
+w8 =  [zeros(1,8*iters/50) 3*ones(1,iters-8*iters/50)];
 
 w = [w1;w2;w3;w4;w5;w6;w7;w8];
+
+%vetores da perturbacao
+q1 = [zeros(1,1*iters/10)    1*ones(1,iters - 1*iters/10)];
+q2 = [zeros(1,2*iters/10)    1.5*ones(1,iters - 2*iters/10)];
+q3 = [zeros(1,4*iters/10)    1.5*ones(1,iters - 4*iters/10)];
+q = [q1;
+       q2;
+       q3];
  
+ Guw = [Gu Gw];
+ %Guw = [Gu];
 %% DMC Loop
 
 for k=2:iters  
 
-inputs = u';
-out = lsim(Gu, inputs, t);
+inputs = [u' q'];
+%inputs = [u'];
+out = lsim(Guw, inputs, t);
 ysim(:,k) = out(k,:)';
+  
+%delta Q passados
+if k < Nssd(1)+1
+    dq_pass1 = q1(k)*ones(Nssd(1),1);
+else
+    dq_pass1 = q1(k-Nssd(1)+1:k)';
+end
 
+if k < Nssd(2)+1
+    dq_pass2 = q2(k)*ones(Nssd(2),1);
+else
+    dq_pass2 = q2(k-Nssd(2)+1:k)';
+end
+
+if k < Nssd(3)+1
+    dq_pass3 = q3(k)*ones(Nssd(3),1);
+else
+    dq_pass3 = q3(k-Nssd(3)+1:k)';
+end
+
+dq_passados = [dq_pass1; dq_pass2; dq_pass3];
+
+%sem feedforward
 y = G*deltaU + H*du_passados + I*ysim(:,k);
 
- %atualizacao deltaUs passados
+%com feedforward
+%y = G*deltaU + H*du_passados + I*ysim(:,k) + Hq*dq_passados;
+
+%atualizacao deltaUs passados
  du_passados = [deltaU(1,1);
                             du_passados(1:Nss(1)-1,1);
-                            deltaU(45+1,1);
+                            deltaU(Nu(1)+1,1);
                             du_passados(Nss(1)+1:Nss(1)+Nss(2)-1,1);
-                            deltaU(45+26+1,1);
+                            deltaU(Nu(1)+Nu(2)+1,1);
                             du_passados(Nss(1)+Nss(2)+1:Nss(1)+Nss(2)+Nss(3)-1,1);
-                            deltaU(45+26+12+1,1);
+                            deltaU(Nu(1)+Nu(2)+Nu(3)+1,1);
                             du_passados(Nss(1)+Nss(2)+Nss(3)+1:Nss(1)+Nss(2)+Nss(3)+Nss(4)-1,1);
-                            deltaU(45+26+12+4+1,1);
+                            deltaU(Nu(1)+Nu(2)+Nu(3)+Nu(4)+1,1);
                             du_passados(Nss(1)+Nss(2)+Nss(3)+Nss(4)+1:Nss(1)+Nss(2)+Nss(3)+Nss(4)+Nss(5)-1,1);
-                            deltaU(45+26+12+4+19+1,1);
+                            deltaU(Nu(1)+Nu(2)+Nu(3)+Nu(4)+Nu(5)+1,1);
                             du_passados(Nss(1)+Nss(2)+Nss(3)+Nss(4)+Nss(5)+1:Nss(1)+Nss(2)+Nss(3)+Nss(4)+Nss(5)+Nss(6)-1,1);
-                            deltaU(45+26+12+4+19+2+1,1);
+                            deltaU(Nu(1)+Nu(2)+Nu(3)+Nu(4)+Nu(5)+Nu(6)+1,1);
                             du_passados(Nss(1)+Nss(2)+Nss(3)+Nss(4)+Nss(5)+Nss(6)+1:Nss(1)+Nss(2)+Nss(3)+Nss(4)+Nss(5)+Nss(6)+Nss(7)-1,1);
-                            deltaU(45+26+12+4+19+2+8+1,1);
+                            deltaU(Nu(1)+Nu(2)+Nu(3)+Nu(4)+Nu(5)+Nu(6)+Nu(7)+1,1);
                             du_passados(Nss(1)+Nss(2)+Nss(3)+Nss(4)+Nss(5)+Nss(6)+Nss(7)+1:Nss(1)+Nss(2)+Nss(3)+Nss(4)+Nss(5)+Nss(6)+Nss(7)+Nss(8)-1,1);
                             ];
- 
+
 %set point  
 %considera ref futura cte
 ref1 =w1(k)*ones(1,N(1))';
@@ -476,7 +592,7 @@ ref8 =w8(k)*ones(1,N(8))';
 ref = [ref1 ; ref2 ;  ref3 ; ref4 ; ref5 ; ref6; ref7; ref8];
         
 %calcula o controle 
-deltaU = K*(ref-y);
+deltaU   = K*(ref-y);
 
 %atualiza controle
 u(1,k) = u(1, k-1) + deltaU(1,1);
@@ -502,6 +618,7 @@ subplot(8,1,1)
 plot(t,out(:,1), 'r')
 hold on
 plot(t,w(1,:), 'r')
+hold on
 legend('saida1','ref1')
 
 %saida 2, ref 2
@@ -588,10 +705,3 @@ legend('u7')
 subplot(8,1,8);
 plot(t,u(8,:),'k')
 legend('u8')
-
-
-% subplot(3,1,3)
-% p = [zeros(1,399) 0.5*ones(1,iters)];
-% plot(p(1:500), 'g');
-% legend('perturbacao')
-
